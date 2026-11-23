@@ -35,8 +35,14 @@ that the control is focusable, and that the inner element is a real control.
 
 ## A2. Non-text contrast is asserted, not eyeballed
 
-**Rule.** A control boundary and a focus ring need at least 3:1 against the surface
-they sit on. Each one gets an assertion through `packages/test-utils/src/contrast.ts`.
+**Rule.** Contrast is asserted in three classes, and A2 owns the second: **text on its
+surface**, at 4.5:1; **everything that is not text** — a control boundary, a focus ring,
+a boundary that carries meaning — at 3:1; and **inactive text**, at a floor of 3:1. The
+thresholds, and which of the three a check holds today, are in
+[design-system/accessibility.md](../design-system/accessibility.md). This rule asserts the
+non-text class: a control boundary and a focus ring need at least 3:1 against the surface
+they sit on, and each one gets an assertion through
+`packages/test-utils/src/contrast.ts`.
 
 **Why.** Repeated over forty components, an eyeball judgement is a coin flip that
 depends on the reviewer's monitor. The threshold for non-text content is lower than

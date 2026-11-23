@@ -44,11 +44,11 @@ Three rules make the measurement mean something:
    surfaces it is read on. A hand-kept list goes stale, and the role added next quarter escapes it.
 2. **Pairs are measured on the composed ramp**: a brand's values over the defaults, never the factory
    ramp alone, in each theme.
-3. **A disabled control is measured as the user sees it.** The control is dimmed whole, with one
-   factor, so ink and surface approach the page together. The 3:1 floor applies to the composited
-   result, not to the roles at full opacity. A control whose own surface is the page surface clears
-   it that way; a filled or accent control does not clear it yet, and closing that is a decision about
-   how a filled disabled control is painted.
+3. **A disabled control is measured as the user sees it.** The control is dimmed at one opacity and
+   its ink is a role chosen for that state, so ink and surface both move toward the page. The 3:1
+   floor applies to the composited result, not to the roles at full opacity. A control whose own
+   surface is the page surface clears it that way; a filled or accent control does not clear it yet,
+   and closing that is a decision about how a filled disabled control is painted.
 
 A status is held to body contrast against its own tint and against the page surface, because it is
 read in both places. A status border is not held to the boundary rule: tint and ink carry the state.

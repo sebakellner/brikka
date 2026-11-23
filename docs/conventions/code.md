@@ -11,6 +11,7 @@ Rules for the TypeScript, the stylesheets and the tooling. Token rules are in
 | C3  | `strict`, `noUnusedLocals`, `noUnusedParameters` stay on                     | `pnpm typecheck` |
 | C4  | Token names in component styles stay plain CSS strings                       | review           |
 | C5  | A disabled control keeps its muted text, loses its hover and carries one dim | review           |
+| C6  | A comment records a constraint the code cannot show                          | review           |
 
 ## C1. Imports of local modules carry `.js`
 

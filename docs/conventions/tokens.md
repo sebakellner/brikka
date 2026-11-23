@@ -39,11 +39,14 @@ a gate nobody can make fail is decoration.
 
 ## R1. A semantic role is a documented commitment, not a derivation of usage
 
-**Rule.** A role under `color.*` or `focus-ring` is added when the design system
-publishes the decision, not when a component starts reading it. A role may ship with no
-consumer. What it may not ship without is a `$type`, a `$description` that says what it
-is for, and a definition in every theme. Renaming or removing one is a breaking change,
-and ships with the changeset that says so.
+**Rule.** A role is added when the design system publishes the decision, not when a
+component starts reading it. The groups that carry roles are `role.bg` (a surface),
+`role.text` (an ink), `role.border` (an edge), the status families `role.success`,
+`role.warning` and `role.info`, and the focus rings `role.focus-ring` and
+`role.focus-halo`. A role may ship with no consumer. What it may not ship without is a
+`$type`, a `$description` that says what it is for, and a definition in every theme.
+Renaming or removing one is a breaking change, and ships with the changeset that says
+so.
 
 The converse is unchanged. A value only one component paints is a component token, not a
 role, and it is deleted in the same change that stops reading it.
@@ -67,12 +70,12 @@ the token file would look complete, nothing ever read one, and they were deleted
 lesson was not "a role needs a consumer". It was "a role needs a reason a reader can
 find", and a description is that reason, where a consumer is whoever needed it first.
 
-**Do** — ship `bg-warning` with its type, its description, and a value in every theme, on
-the day the ramp it needs exists.
+**Do** — ship `--brikka-warning-bg` with its type, its description, and a value in every
+theme, on the day the ramp it needs exists.
 
-**Don't** — ship `bg-warning` as a bare name because a component might want it next
-quarter. That is the ten roles again, with the difference that now a stranger depends on
-it.
+**Don't** — ship `--brikka-warning-bg` as a bare name because a component might want it
+next quarter. That is the ten roles again, with the difference that now a stranger
+depends on it.
 
 **Enforced by.** `pnpm check:tokens` refuses a role that resolves in one theme and not
 another. The `$description` and `$type` half is not a gate yet: the token source moved to
@@ -158,6 +161,10 @@ names the old token — is the decision in
 `--brikka-border-*` in a border colour, `--brikka-focus-ring` in an `outline`. A role
 assigned to a custom property is not checked: that is the hook indirection, and
 the property that matters is wherever the hook is finally read.
+
+A status family is the one shape the check cannot read: its name leads with the family
+rather than with the property — `--brikka-warning-bg` is a `background` — so the property
+does not appear in the first segment and the check covers none of those three families.
 
 **Why.** The family is in the name so the misuse is decidable without judgement.
 `color: var(--brikka-bg-surface)` compiles, paints something nobody intended, and a
@@ -261,11 +268,13 @@ with `:where(:root)` and carries all 64 palette steps before the light role bloc
 all. The suite holds the behaviour: `packages/tokens/test/palette.test.ts` overrides a palette step
 at the root and reads, inside a `data-theme="light"` subtree, the role that composes it.
 
-## R11. The space base is computed into three other families
+## R11. The space base is computed into four families
 
 **Rule.** Each space step is `calc(var(--brikka-space-base) * n)`. Every radius step but `none` and
-`full` reads a space step, and every `size` and `icon` step reads one too. Overriding
-`--brikka-space-base` rescales all four families at once, and nothing is left at the old scale.
+`full` reads a space step, and every `size` and `icon` step reads one too. `size.target-min` is the
+one step in `size` that does not: it is the absolute floor under a control's height, and a floor in
+`calc(base * n)` would move with the base a brand supplies. Overriding `--brikka-space-base` rescales
+all four families at once, and nothing is left at the old scale.
 
 **Why.** That is the intent. One base is what makes the rhythm of a page one decision instead of
 four, and a value that stayed behind would be the one thing on the page at the previous size. It is
