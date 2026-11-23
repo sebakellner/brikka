@@ -142,7 +142,7 @@ The ink of a status family is held to body contrast against its own tint **and**
 surface, because a status is read in both places; `text-danger`, which has no tint of its own, is
 held against whatever surface it is read on. A status border is not held to the boundary rule: the
 tint and the ink carry the state, and an edge chosen to stay in the family does not have to be
-visible on its own. The thresholds are in [Principles](principles.md).
+visible on its own. The thresholds are in [Accessibility](accessibility.md).
 
 ## What it refuses
 

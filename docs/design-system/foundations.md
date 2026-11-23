@@ -118,9 +118,12 @@ decision that this surface is not meant to feel soft.
 things inside the same object, and they do not swap weights. A boundary that has to communicate
 selection cannot use the weight used for a table rule, or it reads as disabled instead of chosen.
 
-**Focus is drawn twice.** An opaque ring states that something is focused, and a translucent halo
-around it keeps that statement visible when the ring sits on a surface of its own colour. A single
-ring is legible on some surfaces and invisible on others, which is the same as being unreliable.
+**Focus is a ring, and the ring is the whole indicator.** An opaque `outline` states that something
+is focused, and because it is an outline it survives forced colours. A translucent halo appears on
+one control and one state — the slider knob under the pointer, whose hit surface sits over the
+track's own colour — and it is never what a keyboard user relies on. A single ring is legible on some
+surfaces and invisible on others, so the ring is where the guarantee lives and where a contrast
+assertion can be aimed.
 
 ## Motion decides how a change arrives
 
@@ -162,4 +165,4 @@ alone, which is what keeps one base unit coherent at every density. The density 
 its own; what is computed from it carries one, so a host cannot configure a control below the size a
 target needs. The type scale carries its floor on the multiplier, so it never goes below the point
 where the smallest size stops being readable. What each floor is, and why one is measured in pixels
-and the other in the multiplier, is in [the token reference](tokens.md).
+and the other in the multiplier, is in [Accessibility](accessibility.md).

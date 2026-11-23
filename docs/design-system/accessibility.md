@@ -25,8 +25,9 @@ misunderstanding, so the scope comes first.
 | State that never depends on colour alone       | Content: alternative text, plain language         |
 
 The left column is a property of values, so a token can carry it. The right column is a property of
-markup and behaviour, which belongs to the page and, later, to the components. Until components
-exist, this page makes no claim about the right column.
+markup and behaviour, which belongs to the page and to the components, and this page makes no claim
+about it: [conventions/accessibility.md](../conventions/accessibility.md) and the component suites
+hold it.
 
 ## Contrast is measured, not assumed
 
@@ -61,8 +62,11 @@ state is one factor, not three colours, seen from the reader's side.
 
 ## Focus
 
-Focus is drawn twice: an opaque ring and a translucent halo, so the indicator survives a surface of
-its own colour (SC 2.4.7, SC 1.4.11).
+The indicator is one opaque ring, and it survives a surface of its own colour (SC 2.4.7, SC 1.4.11).
+The translucent halo in the graph is not a second indicator: it is the slider knob's pointer
+affordance, on the one hit surface that sits over the control's own track, and never what a keyboard
+user relies on to find where they are
+([A8](../conventions/accessibility.md#a8-a-halo-is-never-the-focus-indicator)).
 
 - The indicator is an `outline`, not a `box-shadow`. Outlines persist in forced-colours mode; shadows
   do not.
@@ -86,8 +90,10 @@ The smallest target WCAG 2.2 AA accepts is 24 by 24 CSS pixels (SC 2.5.8).
 - **Resizing and reflow** (SC 1.4.4, SC 1.4.10): text sizes are relative, and layout reflows to a
   narrow viewport without horizontal scrolling. A fixed pixel size set by hand opts that element out.
 - **Text spacing** (SC 1.4.12): a reader may raise line height, letter and word spacing without losing
-  content. For that, a control's height is a minimum, never a fixed height: it is read under
+  content. For that, a one-line control's height is a minimum, never a fixed height: it is read under
   `min-block-size` or `min-height`, so a label that grows pushes the control instead of being clipped.
+  A multi-line control is the exception, and its own content is the reason: the textarea sets
+  `min-block-size: 0` and is sized by its `rows` and by the text it holds.
 - **The type scale floor is 0.875**, and it is a legibility decision, not a WCAG threshold: SC 1.4.4
   governs zoom, not size. The floor sits where the smallest step stops being comfortable to read. It
   is held in the multiplier, not in pixels, because a pixel floor would flatten the scale onto one
@@ -131,37 +137,41 @@ it.
 
 A rule nobody can check is a wish, so this table says plainly what is checked and what is not.
 
-| Guarantee                               | Held by                                                     | State   |
-| --------------------------------------- | ----------------------------------------------------------- | ------- |
-| Target-size floor                       | Test suite                                                  | Checked |
-| Type-scale floor                        | Test suite                                                  | Checked |
-| Control height is a minimum             | Review; a check on the property it is read under is planned | Review  |
-| Contrast of every role pair             | Measured by hand                                            | Review  |
-| Contrast on a brand's composed ramp     | Not automated                                               | Review  |
-| Focus indicator survives forced colours | Not tested                                                  | Review  |
-| Focus not obscured (SC 2.4.11)          | Not tested                                                  | Review  |
-| No colour-only state                    | Review                                                      | Review  |
+| Guarantee                               | Held by                                      | State   |
+| --------------------------------------- | -------------------------------------------- | ------- |
+| Target-size floor                       | Test suite                                   | Checked |
+| Type-scale floor                        | Test suite                                   | Checked |
+| Control height is a minimum             | Review; the property is a style, not a value | Review  |
+| Contrast of every role pair             | Measured by hand                             | Review  |
+| Contrast on a brand's composed ramp     | Not automated                                | Review  |
+| Focus indicator survives forced colours | Not tested                                   | Review  |
+| Focus not obscured (SC 2.4.11)          | Not tested                                   | Review  |
+| No colour-only state                    | Review                                       | Review  |
 
 Where a row says review, the guard is held by a person reading the change, and an exception is argued
 in a new architecture decision record rather than granted in passing.
 
-## Open decisions
+## Why some rows are held by review
 
-1. **A contrast gate as a browser test.** The composed ramp contains `color-mix` and `oklch` values
-   that only a browser resolves, so the gate should read computed values in the browser, per theme,
-   and fail below the thresholds above. Pairing must come from the roles themselves; that needs an
-   explicit convention for which ink is read on which surface.
-2. **A forced-colours test** that focus remains visible and that no state depends on a shadow.
-3. **A check on the property a control height is read under**, so a fixed height is refused the way a
-   role read under the wrong property is.
-4. **Measured numbers in prose go stale.** When the gate exists, any figure quoted for a pair should
-   come from it rather than from a hand measurement.
+The table above is the state, and each row that says review says so for a reason of the medium, not
+for want of a decision:
+
+- **The composed ramp is resolved only by a browser.** A brand's ramp contains `color-mix` and `oklch`
+  values, so the pair a reader sees does not exist until it is computed. A value read at build time
+  is not that pair.
+- **Forced colours is a user agent mode.** No assertion in the suite runs in it, so the ring surviving
+  the replacement is argued in review and recorded in an architecture decision record.
+- **The property a height is read under is a style, not a value.** `pnpm check:tokens` reads names, so
+  a fixed height is refused by a person, the way a role read under the wrong property is.
+- **A measured figure quoted in prose is a snapshot.** The composite it was read from moves when a
+  role does, so the prose carries the threshold and the measurement stays a review act.
 
 ## What this document does not govern
 
 Semantics, keyboard behaviour, names, ARIA and focus management belong to the markup and to the
-components, and are deferred until components exist. This page governs the graph: what its values
-guarantee and what keeps them from being configured below the line.
+components, and are held there by [conventions/accessibility.md](../conventions/accessibility.md) and
+by each component's suite. This page governs the graph: what its values guarantee and what keeps them
+from being configured below the line.
 
 ## Further reading
 
