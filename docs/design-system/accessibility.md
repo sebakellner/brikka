@@ -46,7 +46,7 @@ Three rules make the measurement mean something:
 2. **Pairs are measured on the composed ramp**: a brand's values over the defaults, never the factory
    ramp alone, in each theme.
 3. **A disabled control is measured as the user sees it.** The control is dimmed at one opacity and
-   its ink is a role chosen for that state, so ink and surface both move toward the page. The 3:1
+   its ink stays the role it already reads, so ink and surface both move toward the page. The 3:1
    floor applies to the composited result, not to the roles at full opacity. A control whose own
    surface is the page surface clears it that way; a filled or accent control does not clear it yet,
    and closing that is a decision about how a filled disabled control is painted.
@@ -145,6 +145,7 @@ A rule nobody can check is a wish, so this table says plainly what is checked an
 | Control height is a minimum             | Review; the property is a style, not a value | Review  |
 | Contrast of every role pair             | Measured by hand                             | Review  |
 | Contrast on a brand's composed ramp     | Not automated                                | Review  |
+| Inactive text, as it renders            | Not asserted; waits on the component rebuild | Review  |
 | Focus indicator survives forced colours | Not tested                                   | Review  |
 | Focus not obscured (SC 2.4.11)          | Not tested                                   | Review  |
 | No colour-only state                    | Review                                       | Review  |

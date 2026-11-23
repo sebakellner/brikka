@@ -4,14 +4,14 @@ Rules for the TypeScript, the stylesheets and the tooling. Token rules are in
 [tokens.md](tokens.md); testing is in
 [testing.md](testing.md).
 
-| #   | Rule                                                                         | Enforced by      |
-| --- | ---------------------------------------------------------------------------- | ---------------- |
-| C1  | Imports of local modules carry `.js`                                         | `pnpm typecheck` |
-| C2  | No comments in CSS                                                           | review           |
-| C3  | `strict`, `noUnusedLocals`, `noUnusedParameters` stay on                     | `pnpm typecheck` |
-| C4  | Token names in component styles stay plain CSS strings                       | review           |
-| C5  | A disabled control keeps its muted text, loses its hover and carries one dim | review           |
-| C6  | A comment records a constraint the code cannot show                          | review           |
+| #   | Rule                                                                      | Enforced by      |
+| --- | ------------------------------------------------------------------------- | ---------------- |
+| C1  | Imports of local modules carry `.js`                                      | `pnpm typecheck` |
+| C2  | No comments in CSS                                                        | review           |
+| C3  | `strict`, `noUnusedLocals`, `noUnusedParameters` stay on                  | `pnpm typecheck` |
+| C4  | Token names in component styles stay plain CSS strings                    | review           |
+| C5  | A disabled control is dimmed whole, loses its hover and exchanges no role | review           |
+| C6  | A comment records a constraint the code cannot show                       | review           |
 
 ## C1. Imports of local modules carry `.js`
 
@@ -99,17 +99,18 @@ background: css`
 **Enforced by.** Review — and `check:tokens` covers the failure this would
 otherwise catch.
 
-## C5. A disabled control keeps its muted text, loses its hover and carries one dim
+## C5. A disabled control is dimmed whole, loses its hover and exchanges no role
 
 **Rule.** A disabled control is drawn with `opacity: var(--brikka-opacity-disabled)`
 and has no hover state: every hover rule is guarded by the disabled condition, so
-pointing at an unavailable control changes nothing. Its value text reads
-`--brikka-text-muted`, the role the placeholder already reads, so a filled field does
-not read as an empty one. The surface is **not** repainted: a disabled field keeps
-`--brikka-bg-surface`.
+pointing at an unavailable control changes nothing. Its value keeps the ink role it
+already reads — `--brikka-text-default` — and the factor is what quiets it; the
+placeholder keeps `--brikka-text-muted`, one step quieter than the value under the
+same factor, so a disabled filled field still does not read as an empty one. The
+surface is **not** repainted: a disabled field keeps `--brikka-bg-surface`.
 
-The dim speaks for the availability, the muted text role speaks for the content,
-and neither repaints the surface. An atom hosted by a disabled control still
+The dim speaks for the availability, and it is the only thing that quiets the
+content; nothing repaints the surface. An atom hosted by a disabled control still
 carries `data-state="disabled"` — it reports the state, it does not paint it; the
 container that owns the row is the one that dims, and a consumer can style the atom
 on that state if they want a louder signal. The dim is written once, at the container that
@@ -120,8 +121,8 @@ its value.
 
 The dim keys off the fact `disabled`, not off the painted state. `data-state`
 carries one value and `invalid` wins it, so a control that owns a dim writes
-`data-disabled` beside `data-state` and dims on that; the muted role paints the
-value text, never the whole unavailable control.
+`data-disabled` beside `data-state` and dims on that; the dim paints the whole
+unavailable control, and no role is exchanged for it.
 
 **Why.** WCAG exempts inactive components from its contrast minimums (1.4.3,
 1.4.11), so a dim is an honest "unavailable" rather than a contrast failure. But
@@ -129,16 +130,21 @@ the dim does not inherit safely: opacity on the row and opacity on the label
 inside it compose, and two 0.5s draw the text at 0.25. Two names for one value
 drift the same way — the first retune leaves one of them behind. The muted
 surface, by contrast, is the empty field's surface: painting it under a disabled
-value makes a filled field look unfilled, which is why the text carries the
+value makes a filled field look unfilled, which is why the dim carries the
 signal instead.
 
-**Do** — muted text, one dim, on the element that owns the state, plus a guarded
-hover:
+**And the ink is not exchanged, because it cannot afford to be.** Measured as it
+renders on the current palette, `text-muted` under the factor composites to 2.34:1
+against the page — below the 3:1 floor this system sets for inactive text. The value
+keeps the role it already reads, which the same factor quiets to 3.35:1 and clears it.
+Both figures are a reading, not a guarantee: no suite holds them, so a palette retune
+falsifies them without failing anything. The floor itself stays the page's, not this rule's.
+
+**Do** — one dim, on the element that owns the state, plus a guarded hover:
 
 ```css
 .control:disabled {
   cursor: not-allowed;
-  color: var(--brikka-text-muted);
   opacity: var(--brikka-opacity-disabled);
 }
 
@@ -160,11 +166,14 @@ disabled control with the muted one:
 }
 ```
 
-**Enforced by.** Review. The tests assert the computed opacity against the token,
-the value's colour against the muted role, the background against the surface
-role, and that hovering a disabled control leaves its border and background where
-they were — with a hovered enabled sibling as the positive control, so the
-assertion cannot pass in a browser that never applies the hover rule.
+**Enforced by.** Review, and the tests where they exist. The suite asserts the computed
+opacity against the token, the background against the surface role, and that hovering a
+disabled control leaves its border and background where they were — with a hovered enabled
+sibling as the positive control, so the assertion cannot pass in a browser that never applies
+the hover rule. The composited ink is **not** asserted: the components still paint the muted
+role, so a probe of the model here would measure a control the product does not render. That
+half is held by review until the rebuild, and
+[design-system/accessibility.md](../design-system/accessibility.md) records it as review.
 
 ## C6. A comment records a constraint the code cannot show
 

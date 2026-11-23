@@ -12,25 +12,25 @@
   "font-size": {
     "$type": "dimension",
     "xs": {
-      "$value": "calc(0.75rem * max({scale.type}, 0.875))",
-      "$description": "The floor: a caption or a helper line that must not compete with its subject."
+      "$value": "calc(0.75rem * max({scale.type}, {scale.type-floor}))",
+      "$description": "The smallest step, for a caption or a helper line that must not compete with its subject."
     },
     "sm": {
-      "$value": "calc(0.8125rem * max({scale.type}, 0.875))"
+      "$value": "calc(0.8125rem * max({scale.type}, {scale.type-floor}))"
     },
     "md": {
-      "$value": "calc(0.9375rem * max({scale.type}, 0.875))"
+      "$value": "calc(0.9375rem * max({scale.type}, {scale.type-floor}))"
     },
     "lg": {
-      "$value": "calc(1.125rem * max({scale.type}, 0.875))",
+      "$value": "calc(1.125rem * max({scale.type}, {scale.type-floor}))",
       "$description": "Above body text, for a heading that groups rather than announces."
     },
     "xl": {
-      "$value": "calc(1.375rem * max({scale.type}, 0.875))",
+      "$value": "calc(1.375rem * max({scale.type}, {scale.type-floor}))",
       "$description": "A section title above the content it introduces."
     },
     "2xl": {
-      "$value": "calc(1.75rem * max({scale.type}, 0.875))",
+      "$value": "calc(1.75rem * max({scale.type}, {scale.type-floor}))",
       "$description": "A page title: the largest size the scale offers."
     }
   },
