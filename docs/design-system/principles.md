@@ -39,7 +39,9 @@ names a problem. There is nothing new to invent — the decisions are taken, and
 
 **Except.** You adjust one detail of one component — the background of _this_ button — through its
 hook, and you write down why. An exception is legitimate. A **repeated** exception is information:
-someone is asking for a configuration point, or for a component that does not exist.
+someone is asking for a configuration point, or for a component that does not exist. A hook is the
+component's own name for that detail, `--brikka-button-bg` and not a role; how a hook is written and
+what it may default to is in [the token reference](tokens.md).
 
 **The core.** Names, scales, rules, and which property each role forms — and it has an address:
 `tokens/base` holds the ramps, the scales and the singletons, `tokens/role` holds the role names with
@@ -130,26 +132,37 @@ Where two inputs meet the system owns the computation: a control's height is sup
 density and the multiplier that adapts it stays the system's, so a plain length would opt that
 control out of density.
 
-**Contrast is measured, not assumed.** Every pair a role forms is measured and written down — the
-status families in [the token reference](tokens.md) are the example — and a preset that would form a pair below
-its threshold must not ship. Two classes of pair are measured: text on its surface at
-4.5:1, and everything that is not text — a control's edge, a focus ring, a boundary that carries
-meaning — at 3:1. The pairs are measured on the composed ramp — a brand's values over the defaults,
-never the factory ramp alone — which is the reason a ramp arrives whole: a palette supplied one step
-at a time keeps the default at every step it did not touch, and the measurements above stop
-describing that page. Nothing automated stops it; review does, like the ranges above it.
+**Contrast is measured, not assumed.** Every pair a role forms is measured against its threshold,
+and a preset that would form a pair below one must not ship. **Three classes of pair are measured:**
+text on its surface at 4.5:1; everything that is not text — a control's edge, a focus ring, a
+boundary that carries meaning — at 3:1; and **inactive text, floor of 3:1**, which is the ink of a
+control that cannot be used. The third class is a choice, not an exemption: WCAG lets an inactive
+component go unmeasured, and a label nobody can read at all has stopped saying what the control was,
+which is the one thing a disabled state still owes. Inactive text is measured as it renders: the
+whole control at `opacity.disabled` over the surface behind it, and the ink composited against the
+control's composited surface. A disabled control whose own surface is the page surface clears the
+floor that way; a filled or accent one does not, and that case is open — closing it is a decision
+about how a filled disabled control is painted. The pairs are measured on the composed ramp — a
+brand's values over the defaults, never the factory ramp alone — which is the reason a ramp arrives
+whole: a palette supplied one step at a time keeps the default at every step it did not touch, and
+the measurements stop describing that page. Nothing automated stops a pair under its threshold
+today; review does, like the ranges above it.
 
 **Failures are made visible.** A token that does not resolve invalidates the declaration that reads it, in
-silence. That is why a layer is loaded through `tokens.css`, and why the graph is checked rather than
-trusted.
+silence. That is why a layer is never loaded on its own: `tokens.css` composes them, and a page loads
+`theme.css`, which is `tokens.css` plus `color-scheme` and the rule that retimes every transition
+under reduced motion. It is also why the graph is checked rather than trusted.
 
 **Defaults are complete.** Somebody who configures nothing gets a system that works, in both themes
 and at the factory density. What ships pre-set is the design for most people.
 
 **Accessibility is an invariant.** No axis may produce a result below WCAG 2.2 AA. If one can, the
-defect is the system's and not a choice of whoever configured it. The two multipliers carry a floor
-that the suite holds, so a configuration cannot shrink a target past the size it needs; the contrast
-pairs are measured by hand, and review is what stops a preset that would break them.
+defect is the system's and not a choice of whoever configured it. The density carries no floor of its
+own; the height computed from it does, and the type scale carries one on the multiplier, so a
+configuration cannot shrink a target past the size it needs nor the type past the point where its
+smallest step stops being readable. What each floor is, and why one is absolute and the other a
+multiplier, is in [the token reference](tokens.md). The contrast pairs are measured by hand, and
+review is what stops a preset that would break them.
 
 ## How this breaks
 
