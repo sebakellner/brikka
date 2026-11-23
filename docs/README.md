@@ -70,12 +70,13 @@ a fact that already has an owner, which is the one rule this folder does not bre
 
 ## Published documents
 
-| Document                                                     | Answers                                                                 |
-| ------------------------------------------------------------ | ----------------------------------------------------------------------- |
-| [design-system/principles.md](design-system/principles.md)   | what the system decides, in whose name, and what it refuses             |
-| [design-system/foundations.md](design-system/foundations.md) | the seven decisions a page is built from, and the criterion behind each |
-| [design-system/tokens.md](design-system/tokens.md)           | the families, the roles, the axes, and the names a consumer reads       |
-| `llms.txt` (generated)                                       | the index an agent reads: one line per page, with its summary           |
+| Document                                                         | Answers                                                                      |
+| ---------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| [design-system/principles.md](design-system/principles.md)       | what the system decides, in whose name, and what it refuses                  |
+| [design-system/foundations.md](design-system/foundations.md)     | the seven decisions a page is built from, and the criterion behind each      |
+| [design-system/tokens.md](design-system/tokens.md)               | the families, the roles, the axes, and the names a consumer reads            |
+| [design-system/accessibility.md](design-system/accessibility.md) | what the graph guarantees about accessibility, and what holds each guarantee |
+| `llms.txt` (generated)                                           | the index an agent reads: one line per page, with its summary                |
 
 `design-system/` is the directory `pnpm check:llms` reads, so every page in it carries
 `title`, `description` and `summary`, and the summary is the line the index carries.
