@@ -16,6 +16,10 @@
     "xl": {
       "$value": "{space.16}",
       "$description": "A square that is the content: a profile header image."
+    },
+    "target-min": {
+      "$value": "24px",
+      "$description": "The smallest a control's height may compute to: the 24 CSS pixel target 2.5.8 asks for. Absolute on purpose, the one literal in a family that reads the space ramp: that rule is measured in CSS pixels and not in rhythm, so neither the density nor a brand's base may move it."
     }
   }
 }

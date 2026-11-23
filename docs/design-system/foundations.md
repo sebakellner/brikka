@@ -46,7 +46,7 @@ its light-mode look in the dark, and nobody notices until the dark theme is the 
 Contrast is measured rather than judged. A pair is chosen by the reading it has to support and then
 verified, because "it looks fine on my display" is not evidence a page can carry. **And a state is
 one factor, not three colours:** a control that cannot be used is dimmed at one opacity, and the ink
-on top of it is chosen for that state rather than inherited — the state belongs to the control and
+on top of it is not exchanged for a second role — the state belongs to the control and
 not to one property of it, and three separate painted values would be three things to keep true in
 two themes. What keeps the label identifiable is how far that factor is allowed to go, and that floor
 is in [Accessibility](accessibility.md).
