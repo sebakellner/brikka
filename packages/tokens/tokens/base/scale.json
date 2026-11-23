@@ -3,11 +3,15 @@
     "$type": "number",
     "type": {
       "$value": 1,
-      "$description": "The multiplier every font size is computed from: a host sets 1.125 to read comfortably without zooming, or 0.875 for a dense console, and the scale never computes below 0.875, which keeps `xs` from falling under 10.5px."
+      "$description": "The multiplier every font size is computed from: a host sets 1.125 to read comfortably without zooming, or 0.875 for a dense console. `type-floor` is the smallest multiplier the scale computes at."
+    },
+    "type-floor": {
+      "$value": 0.875,
+      "$description": "The floor under the type scale: a multiplier and not a size, because what it protects is the relationship between the six steps. An absolute floor on each step would flatten them onto one size at a degenerate setting. A preset supplies the scale, never this."
     },
     "density": {
       "$value": 1,
-      "$description": "The multiplier the control height is computed from: a host sets 0.8 for a dense table and 1.2 for a touch surface, and the height never computes below 24px, the target 2.5.8 asks for, because the density never goes under 0.6."
+      "$description": "The multiplier the control height is computed from: a host sets 0.8 for a dense table and 1.2 for a touch surface. It carries no floor of its own; what is computed from it is floored at `size.target-min`, in pixels, because the rule that asks for it is."
     }
   }
 }
