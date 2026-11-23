@@ -44,9 +44,11 @@ changes the value and never the vocabulary. A page that mentions a colour instea
 its light-mode look in the dark, and nobody notices until the dark theme is the only one they use.
 
 Contrast is measured rather than judged. A pair is chosen by the reading it has to support and then
-verified, because "it looks fine on my display" is not evidence a page can carry. And a state is not a
-shade: a control that cannot be used keeps its label identifiable and loses its invitation, which is
-the opposite of fading everything until it disappears.
+verified, because "it looks fine on my display" is not evidence a page can carry. And a state is one
+factor, not three colours: a control that cannot be used is dimmed whole — ink, edge and surface
+together — because the state belongs to the control and not to one property of it, and three separate
+values would be three things to keep true in two themes. What keeps the label identifiable is how far
+that factor is allowed to go, and that floor is in [Principles](principles.md).
 
 ## Typography decides hierarchy
 
@@ -142,7 +144,9 @@ cost them time for nothing.
 
 Breakpoints are content decisions, not device names. A column stops working when the line gets too
 long or the content stops fitting, and that is what a break is; naming a breakpoint after a device
-guarantees it is wrong on the next one.
+guarantees it is wrong on the next one. The graph exports five widths as numbers, `sm` to `2xl`, so
+a media query has a name to read and the decision of which one a layout breaks at stays the
+content's.
 
 **Stacking is a vocabulary, not a number.** A finite set of layers, far enough apart that a host can
 slot something between them, means no component has to invent its position in a queue it cannot see.
@@ -153,7 +157,8 @@ fits on a screen. A denser interface is not a smaller one: shrinking everything 
 read and controls harder to hit, while increasing density makes control surfaces shorter and leaves
 the type alone. Confusing the two produces a page that is both cramped and unreadable. And density
 never touches the space rhythm: it shortens the surfaces a page is made of and leaves every gap
-alone, which is what keeps one base unit coherent at every density. Both multipliers have a floor,
-and the computation is what holds it: the height never computes below the 24 pixels a target needs,
-and the scale never goes below 0.875, where the smallest size would fall under 11 pixels. A host
-cannot configure a page past either of them.
+alone, which is what keeps one base unit coherent at every density. The density carries no floor of
+its own; what is computed from it carries one, so a host cannot configure a control below the size a
+target needs. The type scale carries its floor on the multiplier, so it never goes below the point
+where the smallest size stops being readable. What each floor is, and why one is measured in pixels
+and the other in the multiplier, is in [the token reference](tokens.md).
