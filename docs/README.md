@@ -70,12 +70,13 @@ a fact that already has an owner, which is the one rule this folder does not bre
 
 ## Published documents
 
-| Document                                                     | Answers                                                                 |
-| ------------------------------------------------------------ | ----------------------------------------------------------------------- |
-| [design-system/principles.md](design-system/principles.md)   | what the system decides, in whose name, and what it refuses             |
-| [design-system/foundations.md](design-system/foundations.md) | the seven decisions a page is built from, and the criterion behind each |
-| [design-system/tokens.md](design-system/tokens.md)           | the families, the roles, the axes, and the names a consumer reads       |
-| `llms.txt` (generated)                                       | the index an agent reads: one line per page, with its summary           |
+| Document                                                         | Answers                                                                      |
+| ---------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| [design-system/principles.md](design-system/principles.md)       | what the system decides, in whose name, and what it refuses                  |
+| [design-system/foundations.md](design-system/foundations.md)     | the seven decisions a page is built from, and the criterion behind each      |
+| [design-system/tokens.md](design-system/tokens.md)               | the families, the roles, the axes, and the names a consumer reads            |
+| [design-system/accessibility.md](design-system/accessibility.md) | what the graph guarantees about accessibility, and what holds each guarantee |
+| `llms.txt` (generated)                                           | the index an agent reads: one line per page, with its summary                |
 
 `design-system/` is the directory `pnpm check:llms` reads, so every page in it carries
 `title`, `description` and `summary`, and the summary is the line the index carries.
@@ -131,6 +132,7 @@ that lost. The rules of the folder:
 | a component's public surface               | its `README.md` and its Storybook page, in the shape [conventions/docs.md](conventions/docs.md) fixes                                                                                                        |
 | a shared layer — a mixin, a controller     | the layers table in [CONTRIBUTING.md](../CONTRIBUTING.md#how-a-field-is-built), and the map in [architecture/system.md](architecture/system.md)                                                              |
 | a test rule                                | [conventions/testing.md](conventions/testing.md), and the suite that enforces it                                                                                                                             |
+| a threshold or a floor                     | [design-system/accessibility.md](design-system/accessibility.md), which owns them, and the check that holds it                                                                                               |
 | adding an element or a part                | [guides/add-a-component.md](guides/add-a-component.md), which is where the current checklist lives                                                                                                           |
 | a check, a CI gate or a command            | [CONTRIBUTING.md](../CONTRIBUTING.md)                                                                                                                                                                        |
 | a publishable page                         | regenerate `llms.txt`; the gate fails when it is stale                                                                                                                                                       |

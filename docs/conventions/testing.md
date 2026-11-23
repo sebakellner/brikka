@@ -406,8 +406,9 @@ Two cases, not twenty: the matrix of every combination is a different project.
 
 **Why.** A suite of happy paths asserts what nobody doubted. The refusals are where this kit
 has actually broken — a slotted error atom that rendered while the field said valid, a
-disabled checkbox whose check was illegible at 1.09:1, an `aria-describedby` naming an empty
-region. Each was the case its own rule named and the suite did not run. Spectrum asks for
+disabled checkbox whose check composited to 1.09:1, under the floor the system sets for
+inactive text, an `aria-describedby` naming an empty region. Each was the case its own rule
+named and the suite did not run. Spectrum asks for
 "error handling and edge cases" and its review checklist for exercising "unhappy paths and
 error or empty states in good faith"; Shoelace asks for "all features advertised in the
 component's description".
@@ -512,7 +513,9 @@ multiple tests for one feature into describe blocks".
 **Rule.** A component suite carries both halves. The rules are cases like any other, from
 [accessibility.md](accessibility.md): the association, the reference
 that disappears with its content, the disabled state, the live region that stays, and every
-contrast pair A2 owes. The audit is one more case per theme: `await expectNoViolations(el)`
+pair the three contrast classes cover — text at 4.5:1, non-text at 3:1, inactive text at
+3:1 — stated in [design-system/accessibility.md](../design-system/accessibility.md), with A2
+asserting the non-text one. The audit is one more case per theme: `await expectNoViolations(el)`
 from `packages/test-utils/src/a11y.ts`, running `wcag2a`, `wcag2aa` and `best-practice`. Neither half
 replaces the other — the audit cannot tell "renders nothing" from "clean", and no case can
 see the wiring nobody thought to name.

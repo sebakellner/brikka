@@ -44,11 +44,12 @@ changes the value and never the vocabulary. A page that mentions a colour instea
 its light-mode look in the dark, and nobody notices until the dark theme is the only one they use.
 
 Contrast is measured rather than judged. A pair is chosen by the reading it has to support and then
-verified, because "it looks fine on my display" is not evidence a page can carry. And a state is one
-factor, not three colours: a control that cannot be used is dimmed whole — ink, edge and surface
-together — because the state belongs to the control and not to one property of it, and three separate
-values would be three things to keep true in two themes. What keeps the label identifiable is how far
-that factor is allowed to go, and that floor is in [Principles](principles.md).
+verified, because "it looks fine on my display" is not evidence a page can carry. **And a state is
+one factor, not three colours:** a control that cannot be used is dimmed at one opacity, and the ink
+on top of it is chosen for that state rather than inherited — the state belongs to the control and
+not to one property of it, and three separate painted values would be three things to keep true in
+two themes. What keeps the label identifiable is how far that factor is allowed to go, and that floor
+is in [Accessibility](accessibility.md).
 
 ## Typography decides hierarchy
 

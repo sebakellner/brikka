@@ -133,20 +133,15 @@ density and the multiplier that adapts it stays the system's, so a plain length 
 control out of density.
 
 **Contrast is measured, not assumed.** Every pair a role forms is measured against its threshold,
-and a preset that would form a pair below one must not ship. **Three classes of pair are measured:**
-text on its surface at 4.5:1; everything that is not text — a control's edge, a focus ring, a
-boundary that carries meaning — at 3:1; and **inactive text, floor of 3:1**, which is the ink of a
-control that cannot be used. The third class is a choice, not an exemption: WCAG lets an inactive
-component go unmeasured, and a label nobody can read at all has stopped saying what the control was,
-which is the one thing a disabled state still owes. Inactive text is measured as it renders: the
-whole control at `opacity.disabled` over the surface behind it, and the ink composited against the
-control's composited surface. A disabled control whose own surface is the page surface clears the
-floor that way; a filled or accent one does not, and that case is open — closing it is a decision
-about how a filled disabled control is painted. The pairs are measured on the composed ramp — a
-brand's values over the defaults, never the factory ramp alone — which is the reason a ramp arrives
-whole: a palette supplied one step at a time keeps the default at every step it did not touch, and
-the measurements stop describing that page. Nothing automated stops a pair under its threshold
-today; review does, like the ranges above it.
+and a preset that would form a pair below one must not ship. Three classes carry a threshold — text on
+its surface, everything that is not text, and inactive text — and the third is a choice rather than an
+exemption: WCAG lets an inactive component go unmeasured, and a label nobody can read at all has
+stopped saying what the control was, which is the one thing a disabled state still owes. The
+thresholds, how a disabled control is measured as it renders, and which of them a check holds today
+are in [Accessibility](accessibility.md). The pairs are measured on the composed ramp — a brand's
+values over the defaults, never the factory ramp alone — which is the reason a ramp arrives whole: a
+palette supplied one step at a time keeps the default at every step it did not touch, and the
+measurements stop describing that page.
 
 **Failures are made visible.** A token that does not resolve invalidates the declaration that reads it, in
 silence. That is why a layer is never loaded on its own: `tokens.css` composes them, and a page loads
@@ -161,7 +156,7 @@ defect is the system's and not a choice of whoever configured it. The density ca
 own; the height computed from it does, and the type scale carries one on the multiplier, so a
 configuration cannot shrink a target past the size it needs nor the type past the point where its
 smallest step stops being readable. What each floor is, and why one is absolute and the other a
-multiplier, is in [the token reference](tokens.md). The contrast pairs are measured by hand, and
+multiplier, is in [Accessibility](accessibility.md). The contrast pairs are measured by hand, and
 review is what stops a preset that would break them.
 
 ## How this breaks
