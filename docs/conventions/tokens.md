@@ -297,8 +297,10 @@ composite is what keeps it to one declaration: a rule that reached into the dura
 to carry the composite's syntax, and a component with a duration of its own would keep it either
 way. That is the second half of R7, arriving by this route.
 
-**Enforced by.** Review, in `packages/tokens/src/theme.css`, and the suite: the test page zeroes
-`--brikka-transition`, which is the same mechanism the media query uses.
+**Enforced by.** The suite, in `packages/tokens/test/motion.test.ts`: the reduced-motion block of
+`theme.css` is parsed and asserted to carry `--brikka-transition: 1ms` inside
+`prefers-reduced-motion: reduce`, and a second case proves a bare duration still substitutes into the
+composite's slot. The block itself is reviewed, in `packages/tokens/src/theme.css`.
 
 ## R13. A configuration axis has a floor, and the computation holds it
 
