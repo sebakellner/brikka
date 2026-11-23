@@ -139,8 +139,9 @@ A rule nobody can check is a wish, so this table says plainly what is checked an
 
 | Guarantee                               | Held by                                      | State   |
 | --------------------------------------- | -------------------------------------------- | ------- |
-| Target-size floor                       | Test suite                                   | Checked |
-| Type-scale floor                        | Test suite                                   | Checked |
+| Control-height floor                    | `tokens/test/axis-floors.test.ts`            | Checked |
+| Type-scale floor                        | `tokens/test/axis-floors.test.ts`            | Checked |
+| Target size of a control                | Review                                       | Review  |
 | Control height is a minimum             | Review; the property is a style, not a value | Review  |
 | Contrast of every role pair             | Measured by hand                             | Review  |
 | Contrast on a brand's composed ramp     | Not automated                                | Review  |

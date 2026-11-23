@@ -52,4 +52,26 @@ describe('motion', () => {
       root.style.removeProperty('--brikka-transition');
     }
   });
+
+  /* The case above proves the bare duration substitutes, and worthlessly so: it sets `1ms` by
+   * hand. Nothing read the block that does the substituting, so deleting it from theme.css left
+   * every test in this file green. R7 is held by that file, so the file is what gets asserted —
+   * and inside the media query, because the same declaration outside it is the bug. */
+  it('declares the bare duration inside the reduced-motion block of theme.css', async () => {
+    const css = await (await fetch('/packages/tokens/src/theme.css')).text();
+    const sheet = new CSSStyleSheet();
+    sheet.replaceSync(css);
+
+    const reduced = Array.from(sheet.cssRules).find(
+      (rule): rule is CSSMediaRule =>
+        rule instanceof CSSMediaRule &&
+        rule.conditionText.includes('prefers-reduced-motion: reduce'),
+    );
+    expect(reduced, 'theme.css keeps a prefers-reduced-motion block').to.exist;
+
+    const declarations = Array.from(reduced!.cssRules)
+      .map((rule) => rule.cssText)
+      .join('\n');
+    expect(declarations).to.contain('--brikka-transition: 1ms');
+  });
 });
