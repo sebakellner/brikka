@@ -1,7 +1,7 @@
 ---
 import { tokens } from '@brikka-ui/tokens';
 import TokenPage from '../layouts/TokenPage.astro';
-import { isPalette, kindFor, planInventory, rampsOf } from '../lib/inventory';
+import { inkSurfaceOf, isPalette, kindFor, planInventory, rampsOf } from '../lib/inventory';
 
 /* The inventory is the generated map, never a hand-written list: every name below comes
  * from `Object.values(tokens)`, so a token the package stops (or starts) declaring shows
@@ -54,6 +54,7 @@ const itemsOf = (group: { id: string; names: string[] }): Item[] =>
           <section class="group" data-group={group.id}>
             <h3>
               {group.title}
+              {group.kind && <span class="kind">{group.kind}</span>}
               <span class="count">{group.names.length}</span>
             </h3>
             <p class="caption">{group.caption}</p>
@@ -77,7 +78,7 @@ const itemsOf = (group: { id: string; names: string[] }): Item[] =>
                         <div class="box box-fill" style={`background: var(${name})`} />
                       )}
                       {kind === 'ink' && (
-                        <p class="ink" style={`color: var(${name})`}>
+                        <p class="ink" style={`color: var(${name}); background: var(${inkSurfaceOf(name)})`}>
                           {PHRASE}
                         </p>
                       )}
@@ -289,6 +290,16 @@ const itemsOf = (group: { id: string; names: string[] }): Item[] =>
     color: var(--brikka-text-muted);
   }
 
+  /* role or composite: the two kinds of decision, named where the group starts. */
+  .kind {
+    padding-inline: var(--brikka-space-2);
+    border: var(--brikka-border-width) solid var(--brikka-border-default);
+    border-radius: var(--brikka-radius-full);
+    font-family: var(--brikka-font-mono);
+    font-size: var(--brikka-font-size-xs);
+    color: var(--brikka-text-muted);
+  }
+
   .count {
     font-family: var(--brikka-font-mono);
     font-size: var(--brikka-font-size-sm);
@@ -456,6 +467,7 @@ const itemsOf = (group: { id: string; names: string[] }): Item[] =>
   .ink,
   .type-sample {
     margin: 0;
+    padding-inline: var(--brikka-space-1);
     font-size: var(--brikka-font-size-md);
     line-height: var(--brikka-line-height-md);
   }

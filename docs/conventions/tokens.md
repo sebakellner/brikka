@@ -41,7 +41,12 @@ a gate nobody can make fail is decoration.
 ## R1. A semantic role is a documented commitment, not a derivation of usage
 
 **Rule.** A role is added when the design system publishes the decision, not when a
-component starts reading it. The groups that carry roles are `role.bg` (a surface),
+component starts reading it. Three kinds of name exist in the graph and this rule governs one of
+them: a **primitive** is a reference to a value, a **decision** is a name a page composes with, and a
+**component seam** is a hook. A decision is either a **role**, which resolves per theme, or a
+**composite**, which gathers primitives that are always chosen together — `typography.body-md` is a
+size, a weight, a leading and a tracking that no page should pick apart. The groups that carry roles
+are `role.bg` (a surface),
 `role.text` (an ink), `role.border` (an edge), and the focus rings `role.focus-ring` and
 `role.focus-halo`. A status family lives inside those three groups rather than beside them —
 `bg.success`, `text.warning`, `border.info` — so the family is a vocabulary a reader recognizes and
@@ -91,7 +96,10 @@ removal ships with — suspended for now by
 ## R2. In the token graph, an alias points one layer down and a role never aliases a role
 
 **Rule.** `role → palette`, `radius → space`. Within `tokens/*.json`, a role aliases a
-palette step, never another role, and no chain in the graph is longer than one hop. The
+palette step, never another role, and no chain in the graph is longer than one hop. A composite is
+the one name that aliases several primitives, and that is what it is for: `typography.body-md` names
+four values a page would otherwise choose one at a time, and each of them is still one hop from a
+primitive. The rule governs the direction and the depth of a chain, never the width of a composite. The
 hops that hooks and component-local defaults add live outside the graph:
 `--brikka-button-bg` defaults to `--brikka-button-variant-bg`, which `brikka-button` sets
 to `--brikka-bg-accent`, which is the role. That is where the depth budget sits, and it is

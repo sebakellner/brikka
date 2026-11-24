@@ -110,12 +110,16 @@ function kindBySuffix(rest: string): SampleKind {
   return 'value';
 }
 
-export type Level = 'primitive' | 'semantic' | 'component';
+export type Level = 'primitive' | 'decision';
+
+/** A decision is a name a page composes with. Two kinds, and the page says which. */
+export type DecisionKind = 'role' | 'composite';
 
 export interface InventoryGroup {
   id: string;
   title: string;
   caption: string;
+  kind?: DecisionKind;
   names: string[];
 }
 
@@ -131,12 +135,14 @@ interface Rule {
   level: Level;
   title: string;
   caption: string;
+  kind?: DecisionKind;
   test: RegExp;
 }
 
 /* The order is read top to bottom and the first rule that matches owns the name, so the ring's
- * geometry must be claimed before the ring's colours. `border` splits the same way: two widths
- * are primitives, five edges are roles. */
+ * geometry must be claimed before the ring's colours. `border` splits the same way: two widths are
+ * primitives, five edges are roles. `font` and `elevation` and `motion` split too — a face or a
+ * duration is a value, a text style or a shadow is a decision built from values. */
 const RULES: Rule[] = [
   {
     id: 'colour-ramps',
@@ -161,12 +167,20 @@ const RULES: Rule[] = [
     test: /^--brikka-(size|icon)-/,
   },
   {
-    id: 'typography',
+    id: 'type-values',
     level: 'primitive',
-    title: 'Typography',
+    title: 'Type values',
     caption:
-      'Faces, sizes, weights, leading, tracking, the six composite text styles and a measure.',
-    test: /^--brikka-(font|line|letter|typography|measure)-/,
+      'Faces, sizes, weights, leading, tracking and a measure — the parts a text style is made of.',
+    test: /^--brikka-(font|line|letter|measure)-/,
+  },
+  {
+    id: 'text-styles',
+    level: 'decision',
+    title: 'Text styles',
+    caption: 'The six composites: size, weight, leading and tracking chosen together, never apart.',
+    kind: 'composite',
+    test: /^--brikka-typography-/,
   },
   {
     id: 'border-widths',
@@ -190,11 +204,19 @@ const RULES: Rule[] = [
     test: /^--brikka-focus-ring-(width|offset)$/,
   },
   {
-    id: 'elevation',
+    id: 'depth-values',
     level: 'primitive',
+    title: 'Depth values',
+    caption: 'The tint a shadow is painted with, and nothing else.',
+    test: /^--brikka-elevation-color$/,
+  },
+  {
+    id: 'depth',
+    level: 'decision',
     title: 'Depth',
-    caption: 'One tint and two shadows: what floats reads as one family.',
-    test: /^--brikka-elevation-/,
+    caption: 'Two composites: a surface that rests on the page, and one that floats above it.',
+    kind: 'composite',
+    test: /^--brikka-elevation-(resting|floating)$/,
   },
   {
     id: 'opacity',
@@ -204,11 +226,19 @@ const RULES: Rule[] = [
     test: /^--brikka-opacity-/,
   },
   {
-    id: 'motion',
+    id: 'motion-values',
     level: 'primitive',
+    title: 'Motion values',
+    caption: 'Three durations and four curves.',
+    test: /^--brikka-(duration|easing)-/,
+  },
+  {
+    id: 'motion',
+    level: 'decision',
     title: 'Motion',
-    caption: 'Three durations, four curves, and the one composite a component reads.',
-    test: /^--brikka-(duration|easing|transition)/,
+    caption: 'The one composite a component reads: a duration and a curve, together or not at all.',
+    kind: 'composite',
+    test: /^--brikka-transition$/,
   },
   {
     id: 'stacking',
@@ -233,37 +263,42 @@ const RULES: Rule[] = [
   },
   {
     id: 'surfaces',
-    level: 'semantic',
+    level: 'decision',
     title: 'Surfaces',
     caption: 'What an element sits on, read under `background`.',
-    test: /^--brikka-bg-(?!(?:success|warning|info)$)/,
+    kind: 'role',
+    test: /^--brikka-bg-(?!(?:success$|warning$|info$))/,
   },
   {
     id: 'inks',
-    level: 'semantic',
+    level: 'decision',
     title: 'Inks',
     caption: 'What text is painted with, read under `color`.',
-    test: /^--brikka-text-(?!(?:success|warning|info)$)/,
+    kind: 'role',
+    test: /^--brikka-text-(?!(?:success$|warning$|info$))/,
   },
   {
     id: 'edges',
-    level: 'semantic',
+    level: 'decision',
     title: 'Edges',
     caption: 'The borders that frame, and the divider that does not.',
+    kind: 'role',
     test: /^--brikka-border-(default|strong|subtle|on-accent|error)$/,
   },
   {
     id: 'status',
-    level: 'semantic',
+    level: 'decision',
     title: 'Status',
     caption: 'Three families, each with its surface, its ink and its edge.',
+    kind: 'role',
     test: /^--brikka-(bg|text|border)-(success|warning|info)$/,
   },
   {
     id: 'focus-colours',
-    level: 'semantic',
+    level: 'decision',
     title: 'Focus',
     caption: 'The ring a keyboard user follows, and the halo behind it.',
+    kind: 'role',
     test: /^--brikka-focus-(ring|halo)$/,
   },
 ];
@@ -275,10 +310,10 @@ const LEVELS: { id: Level; title: string; caption: string }[] = [
     caption: 'A reference to a value. Named for where it sits, never for what it is used for.',
   },
   {
-    id: 'semantic',
-    title: 'Semantic',
+    id: 'decision',
+    title: 'Decisions',
     caption:
-      'A decision a page composes with. Named for what it does, and it resolves in both themes.',
+      'A name a page composes with, and what a page composes with is the decision. Two kinds: a role resolves per theme, a composite gathers primitives that are always chosen together. Neither is a value you look up — that is the point.',
   },
 ];
 
@@ -313,6 +348,7 @@ export function planInventory(names: readonly string[]): Inventory {
         id: rule.id,
         title: rule.title,
         caption: rule.caption,
+        kind: rule.kind,
         names: groups.get(rule.id) ?? [],
       }))
       .filter((group) => group.names.length > 0),
@@ -356,4 +392,16 @@ const PALETTE_GROUPS = new Set([
 /** Whether a group is drawn as a palette of chips rather than a row per token. */
 export function isPalette(group: InventoryGroup): boolean {
   return PALETTE_GROUPS.has(group.id);
+}
+
+/* An ink is only judgeable on the surface it is read on, and the reference says which one for each
+ * row. A chip on the page's own surface hides exactly the pair the role exists for. */
+export function inkSurfaceOf(name: string): string {
+  const rest = name.startsWith(PREFIX) ? name.slice(PREFIX.length) : name;
+  const status = /^(success|warning|info)-text$/.exec(rest);
+  if (status) return `--brikka-${status[1]}-bg`;
+  if (rest === 'text-inverse') return '--brikka-bg-inverse';
+  if (rest === 'text-on-accent') return '--brikka-bg-accent';
+  if (rest === 'text-on-selected') return '--brikka-bg-selected';
+  return '--brikka-bg-surface';
 }
