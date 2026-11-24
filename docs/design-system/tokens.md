@@ -182,8 +182,10 @@ concept.
 **A data-visualisation ramp.** A chart palette needs colour-blind safe ramps, which is a different
 problem from reusing the status families.
 
-`orange` stays without a role on purpose: nine steps exist, no role references them, and a preset may
-claim the family — cheaper than deleting it and adding it back.
+Most ramps carry no role today: thirteen exist and the roles read four of them. That is the point of a
+reference ramp rather than a usage list — a step nothing reads is the step the next component or the
+next theme needs, and a preset may claim a whole family. Pruning the palette to what is painted today
+would turn every new component into a palette edit.
 
 ## Naming
 
