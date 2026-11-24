@@ -21,7 +21,9 @@ token source, and a page that copies one is wrong the first time the palette mov
 | `size`                | 32 / 40 / 48 / 64 for a subject: an avatar, a thumbnail, a preview — plus `target-min`, the absolute floor under a control's height, which is a floor and not a square               |
 | `icon`                | 16 / 20 / 24, aligned to text                                                                                                                                                        |
 | `radius`              | `none`, `sm`, `md`, `lg`, `xl`, `full` — the last is the pill                                                                                                                        |
-| `border-width`        | 1px, and a 2px `thick`                                                                                                                                                               |
+| `border-width`        | 1px, and `border-width-thick` 2px                                                                                                                                                    |
+| `focus-ring-width`    | 2px — the ring's own thickness, a value rather than a role                                                                                                                           |
+| `focus-ring-offset`   | 1px — the gap the ring leaves around the control it marks                                                                                                                            |
 | `font`                | two stacks: `sans`, `mono`                                                                                                                                                           |
 | `font-size`           | `xs` to `2xl`, every one multiplied by the type scale                                                                                                                                |
 | `font-weight`         | `regular`, `medium`, `semibold`, `bold`                                                                                                                                              |
@@ -112,6 +114,11 @@ below describes.
 
 ### Focus — two rings, one indicator
 
+The ring is drawn with two primitives and one role: `focus-ring-width` for its thickness,
+`focus-ring-offset` for the gap it leaves around the control, and `focus-ring` for its colour — the
+one part a theme decides. A component reads all three; a page that restyles the indicator overrides
+the colour and keeps the geometry.
+
 | Role         | What it draws                                                                          |
 | ------------ | -------------------------------------------------------------------------------------- |
 | `focus-ring` | The opaque ring a focus indicator is drawn with.                                       |
@@ -156,8 +163,10 @@ primitive does not, and two scales for one dimension would drift until a gap is 
 opacity, rather than repainted: one factor takes the ink, the edge and the surface down together, and
 the alternative is three roles — a surface, an ink and a border — each of which has to stay true in
 two themes for a state a component can already express with one property. `opacity.disabled` is that
-factor. Material says the same thing with an overlay alpha; the reason it is one name and not a
-scale is that the graph needs one answer, not a ladder to choose from.
+factor, and `--brikka-button-disabled-opacity` is a component's own copy of it: it holds no value,
+defaults to the primitive, and exists so a button can be quietened without a rule that names the
+button in the graph. Material says the same thing with an overlay alpha; the reason it is one name
+and not a scale is that the graph needs one answer, not a ladder to choose from.
 
 **Gradient and stroke-style tokens.** Nothing here paints a gradient, and a stroke style is a canvas
 concept.
