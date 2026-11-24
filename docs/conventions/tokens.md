@@ -42,9 +42,10 @@ a gate nobody can make fail is decoration.
 
 **Rule.** A role is added when the design system publishes the decision, not when a
 component starts reading it. The groups that carry roles are `role.bg` (a surface),
-`role.text` (an ink), `role.border` (an edge), the status families `role.success`,
-`role.warning` and `role.info`, and the focus rings `role.focus-ring` and
-`role.focus-halo`. A role may ship with no consumer. What it may not ship without is a
+`role.text` (an ink), `role.border` (an edge), and the focus rings `role.focus-ring` and
+`role.focus-halo`. A status family lives inside those three groups rather than beside them —
+`bg.success`, `text.warning`, `border.info` — so the family is a vocabulary a reader recognizes and
+never a prefix that displaces the property. A role may ship with no consumer. What it may not ship without is a
 `$type`, a `$description` that says what it is for, and a definition in every theme.
 Renaming or removing one is a breaking change, and ships with the changeset that says
 so.
@@ -71,10 +72,10 @@ the token file would look complete, nothing ever read one, and they were deleted
 lesson was not "a role needs a consumer". It was "a role needs a reason a reader can
 find", and a description is that reason, where a consumer is whoever needed it first.
 
-**Do** — ship `--brikka-warning-bg` with its type, its description, and a value in every
+**Do** — ship `--brikka-bg-warning` with its type, its description, and a value in every
 theme, on the day the ramp it needs exists.
 
-**Don't** — ship `--brikka-warning-bg` as a bare name because a component might want it
+**Don't** — ship `--brikka-bg-warning` as a bare name because a component might want it
 next quarter. That is the ten roles again, with the difference that now a stranger
 depends on it.
 
@@ -104,10 +105,12 @@ hops a button resolves through are each owned by the layer that sets them.
 The rest is unchanged. The control tier is gone: the sixteen tokens removed were
 `button.{primary,secondary,ghost}.{bg,bg-hover,fg,border}` and
 `input.{bg,color,label-color,border-color}`, their values now live in `text-default`,
-`border-default`, `bg-surface*` and `bg-accent*`, and `--brikka-button-disabled-opacity`
-is the only component token left because opacity is not a color. It holds no value of its
-own: it defaults to the base primitive `{opacity.disabled}`, so a disabled control has one
-default and one place to override it.
+`border-default`, `bg-surface*` and `bg-accent*`, and what is left under `control` is what
+every control shares rather than what one component paints: `control.height`, and
+`control.disabled-opacity` because opacity is not a color. Neither holds a value of its own —
+the factor defaults to the base primitive `{opacity.disabled}` — so an unavailable control has one
+default and one place to override it, and a component that wants its own seam declares a hook over
+that name.
 
 **Do**
 
@@ -162,10 +165,6 @@ names the old token — is the decision in
 `--brikka-border-*` in a border colour, `--brikka-focus-ring` in an `outline`. A role
 assigned to a custom property is not checked: that is the hook indirection, and
 the property that matters is wherever the hook is finally read.
-
-A status family is the one shape the check cannot read: its name leads with the family
-rather than with the property — `--brikka-warning-bg` is a `background` — so the property
-does not appear in the first segment and the check covers none of those three families.
 
 **Why.** The family is in the name so the misuse is decidable without judgement.
 `color: var(--brikka-bg-surface)` compiles, paints something nobody intended, and a
@@ -338,7 +337,7 @@ and reads the computed value, in both directions. Density `0.3` computes the nam
 scale `0.5` computes each step times the named multiplier, while density `1` still computes `40px`
 and type scale `1.125` still computes `13.5px`, which is what proves the floor is a floor and not a
 pin. Because a named floor and a literal carrying the same number compute the same value, the two
-assertions about what a floor _is_ read the declarations in `base.css` and `typography.css` instead
+assertions about what a floor _is_ read the declarations in `control.css` and `typography.css` instead
 of a computed length, and they read all six font sizes one by one: `xs` alone would let the other
 five regress to a baked `0.875` unnoticed.
 

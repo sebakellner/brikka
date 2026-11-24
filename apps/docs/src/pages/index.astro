@@ -1,27 +1,38 @@
 ---
 import { tokens } from '@brikka-ui/tokens';
 import TokenPage from '../layouts/TokenPage.astro';
-import { groupTokens, kindFor, layoutFor } from '../lib/inventory';
-
-/* The phrase every text sample sets. A size, a weight or an ink is only legible as a line of
- * running text: a stub like `Aa` hides the tracking and the leading the token exists to show. */
-const PHRASE = 'Brikka composes a page';
+import { isPalette, kindFor, planInventory, rampsOf } from '../lib/inventory';
 
 /* The inventory is the generated map, never a hand-written list: every name below comes
  * from `Object.values(tokens)`, so a token the package stops (or starts) declaring shows
  * up on the page the next time it is built. */
 const names = [...new Set(Object.values(tokens))];
-const groups = groupTokens(names);
-const total = Object.values(tokens).length;
+const inventory = planInventory(names);
+const total = names.length;
+
+/* The phrase every text sample sets. A size, a weight or an ink is only legible as a line of
+ * running text: a stub like `Aa` hides the tracking and the leading the token exists to show. */
+const PHRASE = 'Brikka composes a page';
+
+type Item = { ramp: string; names: string[] } | { name: string };
+
+/* The palette splits into one row per ramp; every other group is a flat list of names. */
+const itemsOf = (group: { id: string; names: string[] }): Item[] =>
+  group.id === 'colour-ramps'
+    ? rampsOf(group.names).flatMap((ramp) => [
+        { ramp: ramp.name, names: ramp.names } as Item,
+        ...ramp.names.map((name): Item => ({ name })),
+      ])
+    : group.names.map((name) => ({ name }));
 ---
 
 <TokenPage>
   <header class="intro">
     <h1>Brikka tokens</h1>
     <p>
-      Every custom property <code>@brikka-ui/tokens</code> declares, painted on the dark surface.
-      Text roles are rendered as text, colour roles as boxes carrying the system's own border, and
-      every sample prints its custom property name.
+      Every custom property <code>@brikka-ui/tokens</code> declares, painted on the dark surface,
+      ordered by what kind of name it is: a primitive is a reference to a value, a semantic name is a
+      decision a page composes with, and a component token is a component's own seam.
     </p>
     <p class="summary" data-token-summary data-expected={total}>
       {names.length} names · reading computed values…
@@ -29,96 +40,149 @@ const total = Object.values(tokens).length;
   </header>
 
   {
-    groups.map((group) => (
-      <section class="group" data-group={group.family}>
+    inventory.levels.map((level) => (
+      <section class="level" data-level={level.id}>
         <h2>
-          <code>--brikka-{group.family}-*</code>
-          <span class="count">{group.names.length}</span>
+          {level.title}
+          <span class="count">
+            {level.groups.reduce((sum, group) => sum + group.names.length, 0)}
+          </span>
         </h2>
-        <ul class="tokens" data-layout={layoutFor(group.family)}>
-          {group.names.map((name) => {
-            const kind = kindFor(name);
-            return (
-              <li class="token" data-token={name} data-kind={kind}>
-                <div class="sample">
-                  {kind === 'fill' && <div class="box box-fill" style={`background: var(${name})`} />}
-                  {kind === 'ink' && (
-                    <p class="ink" style={`color: var(${name})`}>
-                      {PHRASE}
-                    </p>
-                  )}
-                  {kind === 'rule' && <div class="box box-rule" style={`border-color: var(${name})`} />}
-                  {kind === 'ring' && (
-                    <div
-                      class="box box-ring"
-                      style={`outline: var(--brikka-focus-ring-width) solid var(${name}); outline-offset: var(--brikka-focus-ring-offset)`}
-                    />
-                  )}
-                  {kind === 'size' && (
-                    <p class="type-sample" style={`font-size: var(${name})`}>
-                      {PHRASE}
-                    </p>
-                  )}
-                  {kind === 'weight' && (
-                    <p class="type-sample" style={`font-weight: var(${name})`}>
-                      {PHRASE}
-                    </p>
-                  )}
-                  {kind === 'leading' && (
-                    <p class="type-sample" style={`line-height: var(${name})`}>
-                      {PHRASE}
-                      <br />
-                      and the line below it
-                    </p>
-                  )}
-                  {kind === 'tracking' && (
-                    <p class="type-sample" style={`letter-spacing: var(${name})`}>
-                      {PHRASE}
-                    </p>
-                  )}
-                  {kind === 'face' && (
-                    <p class="type-sample" style={`font-family: var(${name})`}>
-                      {PHRASE}
-                    </p>
-                  )}
-                  {kind === 'measure' && (
-                    <div class="measure-field">
-                      <div class="measure-fill" style={`width: var(${name})`} />
+        <p class="level-caption">{level.caption}</p>
+
+        {level.groups.map((group) => (
+          <section class="group" data-group={group.id}>
+            <h3>
+              {group.title}
+              <span class="count">{group.names.length}</span>
+            </h3>
+            <p class="caption">{group.caption}</p>
+            <ul class="tokens" data-layout={isPalette(group) ? 'palette' : 'rows'}>
+              {itemsOf(group).map((item) => {
+                if ('ramp' in item) {
+                  return (
+                    <li class="ramp-head" data-ramp={item.ramp}>
+                      <code>--brikka-palette-{item.ramp}-*</code>
+                      <span class="count">{item.names.length}</span>
+                    </li>
+                  );
+                }
+
+                const { name } = item;
+                const kind = kindFor(name);
+                return (
+                  <li class="token" data-token={name} data-kind={kind}>
+                    <div class="sample">
+                      {kind === 'fill' && (
+                        <div class="box box-fill" style={`background: var(${name})`} />
+                      )}
+                      {kind === 'ink' && (
+                        <p class="ink" style={`color: var(${name})`}>
+                          {PHRASE}
+                        </p>
+                      )}
+                      {kind === 'rule' && (
+                        <div class="box box-rule" style={`border-color: var(${name})`} />
+                      )}
+                      {kind === 'ring' && (
+                        <div
+                          class="box box-ring"
+                          style={`outline: var(--brikka-focus-ring-width) solid var(${name}); outline-offset: var(--brikka-focus-ring-offset)`}
+                        />
+                      )}
+                      {kind === 'size' && (
+                        <p class="type-sample" style={`font-size: var(${name})`}>
+                          {PHRASE}
+                        </p>
+                      )}
+                      {kind === 'weight' && (
+                        <p class="type-sample" style={`font-weight: var(${name})`}>
+                          {PHRASE}
+                        </p>
+                      )}
+                      {kind === 'leading' && (
+                        <p class="type-sample" style={`line-height: var(${name})`}>
+                          {PHRASE}
+                          <br />
+                          and the line below it
+                        </p>
+                      )}
+                      {kind === 'tracking' && (
+                        <p class="type-sample" style={`letter-spacing: var(${name})`}>
+                          {PHRASE}
+                        </p>
+                      )}
+                      {kind === 'face' && (
+                        <p class="type-sample" style={`font-family: var(${name})`}>
+                          {PHRASE}
+                        </p>
+                      )}
+                      {kind === 'measure' && (
+                        <div class="measure-field">
+                          <div class="measure-fill" style={`width: var(${name})`} />
+                        </div>
+                      )}
+                      {kind === 'shorthand' && (
+                        <p class="type-sample" style={`font: var(${name})`}>
+                          {PHRASE}
+                        </p>
+                      )}
+                      {kind === 'swatch' && (
+                        <div class="box box-swatch" style={`background: var(${name})`} />
+                      )}
+                      {kind === 'bar' && <div class="bar" style={`width: var(${name})`} />}
+                      {kind === 'radius' && (
+                        <div class="box box-radius" style={`border-radius: var(${name})`} />
+                      )}
+                      {kind === 'shadow' && (
+                        <div class="box box-shadow" style={`box-shadow: var(${name})`} />
+                      )}
+                      {kind === 'opacity' && (
+                        <div class="box box-opacity" style={`opacity: var(${name})`} />
+                      )}
                     </div>
-                  )}
-                  {kind === 'shorthand' && (
-                    <p class="type-sample" style={`font: var(${name})`}>
-                      {PHRASE}
-                    </p>
-                  )}
-                  {kind === 'swatch' && (
-                    <div class="box box-swatch" style={`background: var(${name})`} />
-                  )}
-                  {kind === 'bar' && <div class="bar" style={`width: var(${name})`} />}
-                  {kind === 'radius' && (
-                    <div class="box box-radius" style={`border-radius: var(${name})`} />
-                  )}
-                  {kind === 'shadow' && (
-                    <div class="box box-shadow" style={`box-shadow: var(${name})`} />
-                  )}
-                  {kind === 'opacity' && (
-                    <div class="box box-opacity" style={`opacity: var(${name})`} />
-                  )}
-                </div>
-                <div class="meta">
-                  <code class="name">{name}</code>
-                  {/* The scalar families have nothing to draw: their sample is the value
-                      itself, printed here like every other row's. */}
-                  <span class="value" data-value>
-                    …
-                  </span>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
+                    <div class="meta">
+                      <code class="name">{name}</code>
+                      {/* The scalar families have nothing to draw: their sample is the value
+                          itself, printed here like every other row's. */}
+                      <span class="value" data-value>
+                        …
+                      </span>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+        ))}
       </section>
     ))
+  }
+
+  {
+    inventory.unclassified.length > 0 && (
+      <section class="unclassified" data-unclassified>
+        <h2>
+          Unclassified<span class="count">{inventory.unclassified.length}</span>
+        </h2>
+        <p class="caption">
+          A name no rule in this page knows. It renders, and it renders empty, which is how a
+          family added later announces itself instead of disappearing.
+        </p>
+        <ul class="tokens" data-layout="rows">
+          {inventory.unclassified.map((name) => (
+            <li class="token" data-token={name} data-kind="value">
+              <div class="meta">
+                <code class="name">{name}</code>
+                <span class="value" data-value>
+                  …
+                </span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
   }
 </TokenPage>
 
@@ -184,23 +248,45 @@ const total = Object.values(tokens).length;
     color: var(--brikka-text-danger);
   }
 
+  .level {
+    margin-block-start: var(--brikka-space-16);
+  }
+
+  .level > h2 {
+    display: flex;
+    align-items: baseline;
+    gap: var(--brikka-space-2);
+    margin: 0;
+    padding-block-end: var(--brikka-space-1);
+    border-block-end: var(--brikka-border-width-thick) solid var(--brikka-border-strong);
+    font: var(--brikka-typography-heading-lg);
+  }
+
+  .level-caption {
+    margin-block: var(--brikka-space-2) 0;
+    max-width: var(--brikka-measure-md);
+    color: var(--brikka-text-muted);
+  }
+
   .group {
     margin-block-start: var(--brikka-space-8);
   }
 
-  .group h2 {
+  .group h3 {
     display: flex;
     align-items: baseline;
     gap: var(--brikka-space-2);
-    margin-block: 0 var(--brikka-space-3);
+    margin: 0;
     padding-block-end: var(--brikka-space-1);
     border-block-end: var(--brikka-border-width) solid var(--brikka-border-subtle);
     font: var(--brikka-typography-heading-md);
   }
 
-  .group h2 code {
-    font-family: var(--brikka-font-mono);
-    font-size: var(--brikka-font-size-lg);
+  .caption {
+    margin-block: var(--brikka-space-1) var(--brikka-space-3);
+    max-width: var(--brikka-measure-md);
+    font-size: var(--brikka-font-size-sm);
+    color: var(--brikka-text-muted);
   }
 
   .count {
@@ -219,7 +305,7 @@ const total = Object.values(tokens).length;
     list-style: none;
   }
 
-  /* The colour families become a palette: chips side by side, the name underneath. The 11rem
+  /* The colour groups become a palette: chips side by side, the name underneath. The 11rem
      track is this page's own layout constant, not a token sample — the one place a length may
      be a literal, because it decides how the inventory is read rather than painting with it. */
   .tokens[data-layout='palette'] {
@@ -254,6 +340,21 @@ const total = Object.values(tokens).length;
 
   .tokens[data-layout='palette'] .name {
     font-size: var(--brikka-font-size-xs);
+  }
+
+  /* One row per ramp: the head spans the whole grid, so the next ramp always starts below. */
+  .ramp-head {
+    display: flex;
+    grid-column: 1 / -1;
+    align-items: baseline;
+    gap: var(--brikka-space-2);
+    margin-block-start: var(--brikka-space-4);
+    color: var(--brikka-text-muted);
+  }
+
+  .ramp-head code {
+    font-family: var(--brikka-font-mono);
+    font-size: var(--brikka-font-size-sm);
   }
 
   .token {
@@ -357,5 +458,12 @@ const total = Object.values(tokens).length;
     margin: 0;
     font-size: var(--brikka-font-size-md);
     line-height: var(--brikka-line-height-md);
+  }
+
+  .unclassified {
+    margin-block-start: var(--brikka-space-16);
+    padding: var(--brikka-space-4);
+    border: var(--brikka-border-width-thick) dashed var(--brikka-border-danger);
+    border-radius: var(--brikka-radius-md);
   }
 </style>

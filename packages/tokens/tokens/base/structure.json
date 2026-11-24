@@ -9,11 +9,6 @@
     "$type": "dimension",
     "$description": "A boundary that must be seen: a selected card, a container being edited."
   },
-  "control-height": {
-    "$value": "max(calc(40px * {scale.density}), {size.target-min})",
-    "$type": "dimension",
-    "$description": "The height of a control at rest: a density of 1 is the designed 40px, and the computed height is floored at {size.target-min}, an absolute floor that neither the density nor a brand's base can move."
-  },
   "focus-ring-width": {
     "$value": "2px",
     "$type": "dimension"

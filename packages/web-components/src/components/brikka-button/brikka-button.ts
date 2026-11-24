@@ -84,7 +84,7 @@ export class BrikkaButton extends LitElement {
 
     button[aria-disabled='true'] {
       cursor: not-allowed;
-      opacity: var(--brikka-button-disabled-opacity);
+      opacity: var(--brikka-button-disabled-opacity, var(--brikka-control-disabled-opacity));
     }
 
     @media (forced-colors: active) {

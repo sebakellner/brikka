@@ -53,6 +53,18 @@
       "selected": {
         "$value": "{palette.blue-100}",
         "$description": "The surface of a row or an option that is chosen."
+      },
+      "success": {
+        "$value": "{palette.green-100}",
+        "$description": "The surface of a message that confirms something worked."
+      },
+      "warning": {
+        "$value": "{palette.yellow-100}",
+        "$description": "The surface of a message that asks for attention before something is lost."
+      },
+      "info": {
+        "$value": "{palette.blue-100}",
+        "$description": "The surface of a message that adds context without asking for action."
       }
     },
     "text": {
@@ -79,6 +91,18 @@
       "on-selected": {
         "$value": "{palette.neutral-900}",
         "$description": "The text of a chosen row or option, on `bg.selected`."
+      },
+      "success": {
+        "$value": "{palette.green-800}",
+        "$description": "The text of a confirmation, on `bg.success` or on a page surface."
+      },
+      "warning": {
+        "$value": "{palette.yellow-800}",
+        "$description": "The text of a warning, on `warning.bg` or on a page surface."
+      },
+      "info": {
+        "$value": "{palette.blue-800}",
+        "$description": "The text of an informational message, on `info.bg` or on a page surface."
       }
     },
     "border": {
@@ -101,46 +125,16 @@
       "subtle": {
         "$value": "{palette.neutral-200}",
         "$description": "A divider, not a boundary: it separates without framing."
-      }
-    },
-    "success": {
-      "bg": {
-        "$value": "{palette.green-100}",
-        "$description": "The surface of a message that confirms something worked."
       },
-      "text": {
-        "$value": "{palette.green-800}",
-        "$description": "The text of a confirmation, on `success.bg` or on a page surface."
-      },
-      "border": {
+      "success": {
         "$value": "{palette.green-600}",
         "$description": "The border of a confirmation surface."
-      }
-    },
-    "warning": {
-      "bg": {
-        "$value": "{palette.yellow-100}",
-        "$description": "The surface of a message that asks for attention before something is lost."
       },
-      "text": {
-        "$value": "{palette.yellow-800}",
-        "$description": "The text of a warning, on `warning.bg` or on a page surface."
-      },
-      "border": {
+      "warning": {
         "$value": "{palette.yellow-700}",
         "$description": "The border of a warning surface."
-      }
-    },
-    "info": {
-      "bg": {
-        "$value": "{palette.blue-100}",
-        "$description": "The surface of a message that adds context without asking for action."
       },
-      "text": {
-        "$value": "{palette.blue-800}",
-        "$description": "The text of an informational message, on `info.bg` or on a page surface."
-      },
-      "border": {
+      "info": {
         "$value": "{palette.blue-600}",
         "$description": "The border of an informational surface."
       }
