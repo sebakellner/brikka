@@ -12,7 +12,7 @@ with the decision it carries. A value is copied only where changing it is a syst
 a breakpoint, the number of steps that fixes a family's shape. A value a preset may move stays in the
 token source, and a page that copies one is wrong the first time the palette moves.
 
-## Primitive families
+## Primitive and composite families
 
 | Family                | Carries                                                                                                                                                                              |
 | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -39,6 +39,12 @@ token source, and a page that copies one is wrong the first time the palette mov
 | `z-index`             | five layers: `base`, `dropdown`, `overlay`, `modal`, `toast` — and no component reads one: a dialog and a popover paint in the browser's top layer, which no `z-index` competes with |
 | `scale`               | the two multipliers a host turns: `type`, floored by `type-floor`; `density`                                                                                                         |
 | `control`             | what every control shares: `height`, computed from the density and floored at `size.target-min`, and `disabled-opacity`, the factor every unavailable control is dimmed at           |
+
+Three of those rows are families of **composites** rather than primitives: `typography`,
+`transition`, and the two `elevation` shadows. A composite carries no value of its own — it is the one
+name for primitives a page would otherwise choose one at a time, so a page that picks a `font-size`
+by hand has to decide the weight, the leading and the tracking as well, and a page that names
+`body-md` has decided once.
 
 Two of those families carry a floor, and the floors are not the same kind of thing. `control.height`
 is floored in **pixels**: `size.target-min` is 24, the target 2.5.8 asks for, because that rule is

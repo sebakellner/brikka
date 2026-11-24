@@ -112,6 +112,10 @@ a usage, and naming it by intent would force us to decide which intent owns step
 name belongs to the default palette: a brand that brings another hue is replacing the ramp, and the
 name keeps pointing at the step rather than at the colour.
 
+A **composite** is named for what it holds together: `body-md`, `resting`. It carries no value of its
+own — it is the one name for primitives a page would otherwise pick one at a time — and it is a
+decision, not a primitive, because the choice it records is the group and not any member of it.
+
 A **hook** is named for the component it belongs to: `button-bg`, not `accent-two`.
 
 ## The guards
