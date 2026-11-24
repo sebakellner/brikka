@@ -150,7 +150,9 @@ Breakpoints are content decisions, not device names. A column stops working when
 long or the content stops fitting, and that is what a break is; naming a breakpoint after a device
 guarantees it is wrong on the next one. The graph exports five widths as numbers, `sm` to `2xl`, so
 a media query has a name to read and the decision of which one a layout breaks at stays the
-content's.
+content's. Each of those widths also names a **container**: the widest a content column runs from
+there up, so a page stops growing where its layout does instead of where its words do — a measure
+says how long a line may run, and that is a different question.
 
 **Stacking is a vocabulary, not a number.** A finite set of layers, far enough apart that a host can
 slot something between them, means no component has to invent its position in a queue it cannot see.

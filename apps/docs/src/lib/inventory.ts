@@ -85,6 +85,7 @@ export function kindFor(name: string): SampleKind {
       return second === 'color' ? 'swatch' : 'shadow';
     case 'opacity':
       return 'opacity';
+    case 'container':
     case 'control':
     case 'transition':
     case 'duration':
@@ -165,6 +166,14 @@ const RULES: Rule[] = [
     title: 'Sizes',
     caption: 'A square for a subject and an icon’s alignment, plus the floor under a control.',
     test: /^--brikka-(size|icon)-/,
+  },
+  {
+    id: 'containers',
+    level: 'primitive',
+    title: 'Container',
+    caption:
+      'The widest a content column runs, one per breakpoint — and each is asserted against the breakpoint it mirrors.',
+    test: /^--brikka-container-/,
   },
   {
     id: 'type-values',

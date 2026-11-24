@@ -34,8 +34,10 @@ import '@brikka-ui/tokens/theme.css';
     line-height: var(--brikka-line-height-md);
   }
 
+  /* A measure is how long a line of text may run, and a page width is a layout decision:
+     multiplying one to fake the other is the confusion the container family exists to end. */
   main {
     margin-inline: auto;
-    max-width: calc(var(--brikka-measure-md) * 2);
+    max-inline-size: var(--brikka-container-xl);
   }
 </style>
