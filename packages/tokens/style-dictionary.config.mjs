@@ -33,50 +33,6 @@ const cssFile = (destination, filter, selector = ':root') => ({
   options: { selector, outputReferences: true, showFileHeader: false, formatting: FORMATTING },
 });
 
-const hooks = {
-  buttonBg: '--brikka-button-bg',
-  buttonBgHover: '--brikka-button-bg-hover',
-  buttonFg: '--brikka-button-fg',
-  buttonBorder: '--brikka-button-border',
-  buttonBorderHover: '--brikka-button-border-hover',
-  buttonRadius: '--brikka-button-radius',
-  inputRadius: '--brikka-input-radius',
-  textareaRadius: '--brikka-textarea-radius',
-  checkboxSize: '--brikka-checkbox-size',
-  checkboxRadius: '--brikka-checkbox-radius',
-  checkboxVariantSize: '--brikka-checkbox-variant-size',
-  checkboxVariantRadius: '--brikka-checkbox-variant-radius',
-  switchTrackWidth: '--brikka-switch-track-width',
-  switchThumbSize: '--brikka-switch-thumb-size',
-  switchRadius: '--brikka-switch-radius',
-  switchVariantTrackWidth: '--brikka-switch-variant-track-width',
-  switchVariantThumbSize: '--brikka-switch-variant-thumb-size',
-  switchVariantRadius: '--brikka-switch-variant-radius',
-  radioGroupItemSize: '--brikka-radio-group-item-size',
-  radioGroupItemRadius: '--brikka-radio-group-item-radius',
-  radioGroupItemVariantSize: '--brikka-radio-group-item-variant-size',
-  radioGroupItemVariantRadius: '--brikka-radio-group-item-variant-radius',
-  sliderThumbSize: '--brikka-slider-thumb-size',
-  sliderTrackHeight: '--brikka-slider-track-height',
-  sliderRadius: '--brikka-slider-radius',
-  sliderLength: '--brikka-slider-length',
-  sliderHaloSize: '--brikka-slider-halo-size',
-  sliderTickSize: '--brikka-slider-tick-size',
-  sliderVariantThumbSize: '--brikka-slider-variant-thumb-size',
-  sliderVariantTrackHeight: '--brikka-slider-variant-track-height',
-  sliderVariantRadius: '--brikka-slider-variant-radius',
-  sliderVariantLength: '--brikka-slider-variant-length',
-  sliderVariantHaloSize: '--brikka-slider-variant-halo-size',
-  sliderReadoutGap: '--brikka-slider-readout-gap',
-  sliderVariantReadoutGap: '--brikka-slider-variant-readout-gap',
-  sliderVariantTickSize: '--brikka-slider-variant-tick-size',
-  buttonVariantBg: '--brikka-button-variant-bg',
-  buttonVariantBgHover: '--brikka-button-variant-bg-hover',
-  buttonVariantFg: '--brikka-button-variant-fg',
-  buttonVariantBorder: '--brikka-button-variant-border',
-  buttonDisabledOpacity: '--brikka-button-disabled-opacity',
-};
-
 const camel = (path) =>
   path
     .flatMap((part) => part.split('-'))
@@ -164,14 +120,6 @@ export default {
           '} as const;',
           '',
           'export type Breakpoint = keyof typeof breakpoints;',
-          '',
-          'export const hooks = {',
-          Object.entries(hooks)
-            .map(([key, value]) => `  ${key}: '${value}',`)
-            .join('\n'),
-          '} as const;',
-          '',
-          'export type HookName = (typeof hooks)[keyof typeof hooks];',
           '',
         ].join('\n');
       },

@@ -196,7 +196,9 @@ claim the family — cheaper than deleting it and adding it back.
   `var(--brikka-button-bg, var(--brikka-button-variant-bg))`.
 - A hook is a component's own name for one detail — `--brikka-button-bg` is the button's background
   and nothing else. Setting one adjusts a single component; it does not restate what a role means,
-  and a page that sets the same hook twice is asking for a role.
+  and a page that sets the same hook twice is asking for a role. Every hook a component reads is
+  listed in that package's own `hooks.json`, derived from its sources and checked for freshness, so a
+  seam cannot exist only in someone's memory of it.
 
 ## What consumes this
 
@@ -207,6 +209,13 @@ and the replacement that retimes every transition to `1ms` under `prefers-reduce
 A layer is never imported on its own. `tokens.css` composes them, and `typography.css` computes from
 a scale that `base.css` declares, so a page that links one file in isolation gets an unresolved
 `var()`.
+
+The package exports two things and nothing else: `tokens`, the map from a readable key to the custom
+property that carries it, and `breakpoints`, five numbers, because `@media` cannot read a custom
+property. A hook is not in either of them — `--brikka-button-bg` is the button's name, so the
+components keep their own inventory of the seams they expose, generated from their sources. The
+design system names no component, which is the same rule that says a component never reads a palette
+step, seen from the other side.
 
 The graph is also a source for tools: the palette for Figma, the breakpoints as numbers for a media
 query, and the whole thing as a design system a host can paint with without registering a single

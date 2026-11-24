@@ -32,6 +32,12 @@ Before any of these rules, `pnpm check:tokens` asserts **existence**: every
 other tool sees those names, and a typo renders nothing at runtime. It covers
 tests, stories and `storybook/*/.storybook/`, because a typo in any of them is still a typo.
 
+The hooks half of that rule is the components' inventory, not the graph's: `pnpm generate:hooks`
+derives the names a component reads and the graph does not declare, writes
+`packages/web-components/hooks.json`, and `pnpm test:checks` fails when the committed file no longer
+matches the sources. A name that belongs to no component is refused there, because a hook is named
+for the component it belongs to and nothing else can own it.
+
 It also refuses a read on the prefix this kit published before the rename. `--bk-*` is
 not a name `check:tokens` can see, so a read left on it passes existence and renders
 through its fallback — the failure this check exists to catch, arriving by a route it

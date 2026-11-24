@@ -30,8 +30,8 @@ const DARK_PALETTE_ONLY =
   ':where([data-theme="dark"]) {\n  --brikka-palette-blue-600: #8ab4f8;\n}\n';
 
 /* The smallest tree that satisfies `requireRoots` and the check's own preconditions: a
- * declared name, a semantic role in both themes, a hooks source, a component and a
- * Storybook directory. */
+ * declared name, a semantic role in both themes, the components' hooks inventory, a component
+ * and a Storybook directory. */
 const build = ({ component = '', storybook = PARAMETERS, dark = DARK_ROLE, light } = {}) => {
   const root = mkdtempSync(join(tmpdir(), 'brikka-gate-'));
 
@@ -48,10 +48,7 @@ const build = ({ component = '', storybook = PARAMETERS, dark = DARK_ROLE, light
   );
   write('packages/tokens/src/tokens/color.dark.css', dark);
   if (light !== undefined) write('packages/tokens/src/tokens/color.css', light);
-  write(
-    'packages/tokens/style-dictionary.config.mjs',
-    `export default { hooks: { accent: '${ROLE}' } };\n`,
-  );
+  write('packages/web-components/hooks.json', JSON.stringify([ROLE]));
   write('packages/web-components/src/components/probe/probe.ts', component);
   write('storybook/web-components/.storybook/preview.ts', storybook);
 
