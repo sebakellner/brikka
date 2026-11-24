@@ -124,7 +124,6 @@ export const tokens = {
   containerLg: '--brikka-container-lg',
   containerXl: '--brikka-container-xl',
   container2xl: '--brikka-container-2xl',
-  elevationColor: '--brikka-elevation-color',
   elevationResting: '--brikka-elevation-resting',
   elevationFloating: '--brikka-elevation-floating',
   measureSm: '--brikka-measure-sm',
@@ -236,6 +235,7 @@ export const tokens = {
   roleBorderInfo: '--brikka-border-info',
   roleFocusHalo: '--brikka-focus-halo',
   roleFocusRing: '--brikka-focus-ring',
+  roleElevationColor: '--brikka-elevation-color',
 } as const;
 
 export type TokenName = (typeof tokens)[keyof typeof tokens];

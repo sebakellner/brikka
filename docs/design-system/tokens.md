@@ -41,8 +41,8 @@ token source, and a page that copies one is wrong the first time the palette mov
 | `scale`               | the two multipliers a host turns: `type`, floored by `type-floor`; `density`                                                                                                              |
 | `control`             | what every control shares: `height`, computed from the density and floored at `size.target-min`, and `disabled-opacity`, the factor every unavailable control is dimmed at                |
 
-Three of those rows are families of **composites** rather than primitives: `typography`,
-`transition`, and the two `elevation` shadows. A composite carries no value of its own — it is the one
+Two of those rows are families of **composites** rather than primitives: `typography` and
+`transition`, and with them the two `elevation` shadows. A composite carries no value of its own — it is the one
 name for primitives a page would otherwise choose one at a time, so a page that picks a `font-size`
 by hand has to decide the weight, the leading and the tracking as well, and a page that names
 `body-md` has decided once.
@@ -118,6 +118,17 @@ Every boundary is measured at 3:1 against the surface it sits on. `border-subtle
 divider separates two things inside an object instead of framing it. The three status edges are not
 boundaries either — their tint and their ink carry the state, which is what the status section
 below describes.
+
+### Depth — the one role that is not a surface, an ink or an edge
+
+| Role              | What it paints                                                                |
+| ----------------- | ----------------------------------------------------------------------------- |
+| `elevation-color` | The tint both shadows are painted with. Denser in the dark theme, on purpose. |
+
+It is a role because one alpha cannot lift both pages. Over white, eighteen percent of the darkest
+neutral is a clear edge; over a near-black surface the same value composites to within a level of
+what it sits on, so a shadow declared once would be visible in one theme and absent in the other. The
+tint is therefore declared per theme like every other role, and the two shadows read it.
 
 ### Focus — two rings, one indicator
 

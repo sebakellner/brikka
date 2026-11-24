@@ -420,7 +420,13 @@ const itemsOf = (group: { id: string; names: string[] }): Item[] =>
     background: var(--brikka-bg-surface);
   }
 
-  .box-shadow {
+  /* A shadow is judged on something the size of a card, not on a 40px square: with a 3px blur
+     the whole shadow lives in a band thinner than the box's own border. Two classes on the
+     selector because `.box` sets the size and comes later in this sheet. */
+  .token[data-kind='shadow'] .sample .box {
+    width: var(--brikka-container-sm);
+    max-width: 100%;
+    height: var(--brikka-space-16);
     background: var(--brikka-bg-surface);
   }
 

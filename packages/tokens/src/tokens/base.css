@@ -4,7 +4,6 @@
   --brikka-container-lg: 1024px;
   --brikka-container-xl: 1280px;
   --brikka-container-2xl: 1536px;
-  --brikka-elevation-color: rgb(28 25 23 / 0.12);
   --brikka-measure-sm: 45ch;
   --brikka-measure-md: 65ch;
   --brikka-z-index-base: 0;
@@ -28,8 +27,8 @@
   --brikka-focus-ring-width: 2px;
   --brikka-focus-ring-offset: 1px;
   --brikka-opacity-disabled: 0.5;
-  --brikka-elevation-resting: 0px 1px 3px 0px var(--brikka-elevation-color);
-  --brikka-elevation-floating: 0px 8px 24px -4px var(--brikka-elevation-color);
+  --brikka-elevation-resting: 0px 2px 6px -1px var(--brikka-elevation-color);
+  --brikka-elevation-floating: 0px 12px 32px -8px var(--brikka-elevation-color);
   --brikka-transition: var(--brikka-duration-base) var(--brikka-easing-standard) 0ms;
   --brikka-icon-sm: var(--brikka-space-4);
   --brikka-icon-md: var(--brikka-space-5);

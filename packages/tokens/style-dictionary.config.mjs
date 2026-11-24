@@ -217,27 +217,33 @@ export default {
       buildPath: `${paths.tokensSrc}/`,
       files: [{ destination: 'tokens.generated.ts', format: 'typescript/token-names' }],
     },
-    base: platform([
-      cssFile(
-        'base.css',
-        only(
-          'border-width',
-          'border-width-thick',
-          'container',
-          'duration',
-          'easing',
-          'elevation',
-          'icon',
-          'measure',
-          'transition',
-          'focus-ring-width',
-          'focus-ring-offset',
-          'opacity',
-          'scale',
-          'size',
-          'z-index',
+    base: platform(
+      [
+        cssFile(
+          'base.css',
+          only(
+            'border-width',
+            'border-width-thick',
+            'container',
+            'duration',
+            'easing',
+            'elevation',
+            'icon',
+            'measure',
+            'transition',
+            'focus-ring-width',
+            'focus-ring-offset',
+            'opacity',
+            'scale',
+            'size',
+            'z-index',
+          ),
         ),
-      ),
-    ]),
+      ],
+      /* A base token may read a role — a shadow reads its tint — and the role's emitted name is
+       * the stripped one. Without this the reference keeps the `role` segment and points at a
+       * custom property nothing declares. */
+      { transforms: ['name/strip-role'] },
+    ),
   },
 };

@@ -122,6 +122,7 @@
 
 :where(:root), :where([data-theme="light"]) {
   --brikka-bg-scrim: rgb(28 25 23 / 0.48);
+  --brikka-elevation-color: rgb(28 25 23 / 0.18);
   --brikka-bg-inverse: var(--brikka-palette-neutral-900);
   --brikka-bg-surface: var(--brikka-palette-white);
   --brikka-bg-surface-muted: var(--brikka-palette-neutral-100);
