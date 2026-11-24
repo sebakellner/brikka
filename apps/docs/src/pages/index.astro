@@ -1,0 +1,361 @@
+---
+import { tokens } from '@brikka-ui/tokens';
+import TokenPage from '../layouts/TokenPage.astro';
+import { groupTokens, kindFor, layoutFor } from '../lib/inventory';
+
+/* The phrase every text sample sets. A size, a weight or an ink is only legible as a line of
+ * running text: a stub like `Aa` hides the tracking and the leading the token exists to show. */
+const PHRASE = 'Brikka composes a page';
+
+/* The inventory is the generated map, never a hand-written list: every name below comes
+ * from `Object.values(tokens)`, so a token the package stops (or starts) declaring shows
+ * up on the page the next time it is built. */
+const names = [...new Set(Object.values(tokens))];
+const groups = groupTokens(names);
+const total = Object.values(tokens).length;
+---
+
+<TokenPage>
+  <header class="intro">
+    <h1>Brikka tokens</h1>
+    <p>
+      Every custom property <code>@brikka-ui/tokens</code> declares, painted on the dark surface.
+      Text roles are rendered as text, colour roles as boxes carrying the system's own border, and
+      every sample prints its custom property name.
+    </p>
+    <p class="summary" data-token-summary data-expected={total}>
+      {names.length} names · reading computed values…
+    </p>
+  </header>
+
+  {
+    groups.map((group) => (
+      <section class="group" data-group={group.family}>
+        <h2>
+          <code>--brikka-{group.family}-*</code>
+          <span class="count">{group.names.length}</span>
+        </h2>
+        <ul class="tokens" data-layout={layoutFor(group.family)}>
+          {group.names.map((name) => {
+            const kind = kindFor(name);
+            return (
+              <li class="token" data-token={name} data-kind={kind}>
+                <div class="sample">
+                  {kind === 'fill' && <div class="box box-fill" style={`background: var(${name})`} />}
+                  {kind === 'ink' && (
+                    <p class="ink" style={`color: var(${name})`}>
+                      {PHRASE}
+                    </p>
+                  )}
+                  {kind === 'rule' && <div class="box box-rule" style={`border-color: var(${name})`} />}
+                  {kind === 'ring' && (
+                    <div
+                      class="box box-ring"
+                      style={`outline: var(--brikka-focus-ring-width) solid var(${name}); outline-offset: var(--brikka-focus-ring-offset)`}
+                    />
+                  )}
+                  {kind === 'size' && (
+                    <p class="type-sample" style={`font-size: var(${name})`}>
+                      {PHRASE}
+                    </p>
+                  )}
+                  {kind === 'weight' && (
+                    <p class="type-sample" style={`font-weight: var(${name})`}>
+                      {PHRASE}
+                    </p>
+                  )}
+                  {kind === 'leading' && (
+                    <p class="type-sample" style={`line-height: var(${name})`}>
+                      {PHRASE}
+                      <br />
+                      and the line below it
+                    </p>
+                  )}
+                  {kind === 'tracking' && (
+                    <p class="type-sample" style={`letter-spacing: var(${name})`}>
+                      {PHRASE}
+                    </p>
+                  )}
+                  {kind === 'face' && (
+                    <p class="type-sample" style={`font-family: var(${name})`}>
+                      {PHRASE}
+                    </p>
+                  )}
+                  {kind === 'measure' && (
+                    <div class="measure-field">
+                      <div class="measure-fill" style={`width: var(${name})`} />
+                    </div>
+                  )}
+                  {kind === 'shorthand' && (
+                    <p class="type-sample" style={`font: var(${name})`}>
+                      {PHRASE}
+                    </p>
+                  )}
+                  {kind === 'swatch' && (
+                    <div class="box box-swatch" style={`background: var(${name})`} />
+                  )}
+                  {kind === 'bar' && <div class="bar" style={`width: var(${name})`} />}
+                  {kind === 'radius' && (
+                    <div class="box box-radius" style={`border-radius: var(${name})`} />
+                  )}
+                  {kind === 'shadow' && (
+                    <div class="box box-shadow" style={`box-shadow: var(${name})`} />
+                  )}
+                  {kind === 'opacity' && (
+                    <div class="box box-opacity" style={`opacity: var(${name})`} />
+                  )}
+                </div>
+                <div class="meta">
+                  <code class="name">{name}</code>
+                  {/* The scalar families have nothing to draw: their sample is the value
+                      itself, printed here like every other row's. */}
+                  <span class="value" data-value>
+                    …
+                  </span>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    ))
+  }
+</TokenPage>
+
+<script>
+  /* The computed value, read from the cascade at runtime — never a build step. A custom
+   * property the stylesheet does not declare computes to the empty string, and that empty
+   * string is the finding this app exists for: name it, and mark the row. */
+  const summary = document.querySelector<HTMLElement>('[data-token-summary]');
+  const root = getComputedStyle(document.documentElement);
+  const rows = document.querySelectorAll<HTMLElement>('[data-token]');
+
+  const seen = new Set<string>();
+  const unresolved: string[] = [];
+
+  for (const row of rows) {
+    const name = row.dataset.token;
+    if (!name || seen.has(name)) continue;
+    seen.add(name);
+
+    const value = root.getPropertyValue(name).trim();
+    for (const cell of row.querySelectorAll<HTMLElement>('[data-value]')) {
+      cell.textContent = value || 'no value';
+    }
+    if (!value) {
+      row.dataset.empty = 'true';
+      unresolved.push(name);
+    }
+  }
+
+  if (summary) {
+    const expected = summary.dataset.expected ?? '?';
+    const missing =
+      unresolved.length === 0 ? 'every name resolves' : `no value: ${unresolved.join(', ')}`;
+    summary.textContent = `${seen.size} of ${expected} names rendered · ${missing}`;
+    if (unresolved.length > 0) summary.dataset.empty = 'true';
+  }
+</script>
+
+<style>
+  .intro h1 {
+    margin-block: 0 var(--brikka-space-2);
+    font: var(--brikka-typography-heading-lg);
+  }
+
+  .intro p {
+    margin-block: 0 var(--brikka-space-2);
+    max-width: var(--brikka-measure-md);
+    color: var(--brikka-text-default);
+  }
+
+  .intro code {
+    font-family: var(--brikka-font-mono);
+    font-size: var(--brikka-font-size-sm);
+  }
+
+  .summary {
+    font-family: var(--brikka-font-mono);
+    font-size: var(--brikka-font-size-sm);
+    color: var(--brikka-text-muted);
+  }
+
+  .summary[data-empty] {
+    color: var(--brikka-text-danger);
+  }
+
+  .group {
+    margin-block-start: var(--brikka-space-8);
+  }
+
+  .group h2 {
+    display: flex;
+    align-items: baseline;
+    gap: var(--brikka-space-2);
+    margin-block: 0 var(--brikka-space-3);
+    padding-block-end: var(--brikka-space-1);
+    border-block-end: var(--brikka-border-width) solid var(--brikka-border-subtle);
+    font: var(--brikka-typography-heading-md);
+  }
+
+  .group h2 code {
+    font-family: var(--brikka-font-mono);
+    font-size: var(--brikka-font-size-lg);
+  }
+
+  .count {
+    font-family: var(--brikka-font-mono);
+    font-size: var(--brikka-font-size-sm);
+    font-weight: var(--brikka-font-weight-regular);
+    color: var(--brikka-text-muted);
+  }
+
+  .tokens {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--brikka-space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* The colour families become a palette: chips side by side, the name underneath. The 11rem
+     track is this page's own layout constant, not a token sample — the one place a length may
+     be a literal, because it decides how the inventory is read rather than painting with it. */
+  .tokens[data-layout='palette'] {
+    grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  }
+
+  .tokens[data-layout='palette'] .token {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--brikka-space-2);
+  }
+
+  .tokens[data-layout='palette'] .sample {
+    min-height: var(--brikka-space-10);
+  }
+
+  .tokens[data-layout='palette'] .box {
+    width: 100%;
+    height: var(--brikka-space-10);
+  }
+
+  /* Two pixels on the chip itself: a boundary drawn at its own width disappears against the
+     cell behind it, and this row exists to be looked at. */
+  .tokens[data-layout='palette'] .box-rule {
+    border-width: var(--brikka-border-width-thick);
+  }
+
+  .tokens[data-layout='palette'] .meta {
+    grid-template-columns: 1fr;
+    gap: var(--brikka-space-1);
+  }
+
+  .tokens[data-layout='palette'] .name {
+    font-size: var(--brikka-font-size-xs);
+  }
+
+  .token {
+    display: flex;
+    align-items: center;
+    gap: var(--brikka-space-3);
+    min-width: 0;
+    padding: var(--brikka-space-2);
+    border-radius: var(--brikka-radius-md);
+    background: var(--brikka-bg-surface-muted);
+  }
+
+  .token[data-empty] {
+    outline: var(--brikka-border-width-thick) dashed var(--brikka-border-danger);
+    outline-offset: var(--brikka-focus-ring-offset);
+  }
+
+  /* A sample can be wider than the row it sits in (a 65ch measure, a long shorthand
+     value): it gives up its own width before the name does, so the name never wraps to
+     one character per line. */
+  .sample {
+    display: flex;
+    flex: 0 1 auto;
+    align-items: center;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .meta {
+    display: grid;
+    flex: 1 1 auto;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: var(--brikka-space-3);
+    min-width: 0;
+  }
+
+  .name {
+    font-family: var(--brikka-font-mono);
+    font-size: var(--brikka-font-size-sm);
+    color: var(--brikka-text-default);
+    overflow-wrap: anywhere;
+  }
+
+  .value {
+    font-family: var(--brikka-font-mono);
+    font-size: var(--brikka-font-size-xs);
+    color: var(--brikka-text-muted);
+    overflow-wrap: anywhere;
+  }
+
+  .token[data-empty] .value {
+    font-weight: var(--brikka-font-weight-semibold);
+    color: var(--brikka-text-danger);
+  }
+
+  /* Every box the page draws carries the system's own border, so a fill that does not
+     resolve is visible as a hole in the system rather than as one invisible box. */
+  .box {
+    box-sizing: border-box;
+    width: var(--brikka-size-md);
+    height: var(--brikka-size-md);
+    border: var(--brikka-border-width) solid var(--brikka-border-default);
+    border-radius: var(--brikka-radius-sm);
+  }
+
+  .box-swatch {
+    width: var(--brikka-space-12);
+    height: var(--brikka-space-12);
+  }
+
+  /* A measure is a line length, so it is drawn inside a frame of the longest measure: the
+     token's own width against a reference, which is what makes sm and md distinguishable. */
+  .measure-field {
+    box-sizing: border-box;
+    width: var(--brikka-measure-md);
+    height: var(--brikka-size-sm);
+    overflow: hidden;
+    border: var(--brikka-border-width) solid var(--brikka-border-default);
+    border-radius: var(--brikka-radius-sm);
+    background: var(--brikka-bg-surface-hover);
+  }
+
+  .measure-fill {
+    height: 100%;
+    background: var(--brikka-bg-accent);
+  }
+
+  .box-opacity {
+    background: var(--brikka-bg-accent);
+  }
+
+  .bar {
+    height: var(--brikka-border-width-thick);
+    border-radius: var(--brikka-radius-full);
+    background: var(--brikka-bg-accent);
+  }
+
+  .ink,
+  .type-sample {
+    margin: 0;
+    font-size: var(--brikka-font-size-md);
+    line-height: var(--brikka-line-height-md);
+  }
+</style>

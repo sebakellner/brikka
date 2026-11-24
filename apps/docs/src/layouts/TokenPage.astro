@@ -1,0 +1,41 @@
+---
+/* The one place the theme enters: the package's public stylesheet, imported once for the
+ * whole app. Nothing here copies CSS out of the package, and no path reaches into
+ * `packages/` — `@brikka-ui/tokens/theme.css` is the entry a consumer installs. */
+import '@brikka-ui/tokens/theme.css';
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Brikka tokens</title>
+    <meta name="robots" content="noindex" />
+  </head>
+  <body>
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>
+
+<style is:global>
+  /* The canvas is the page's job, and the page paints it with the roles the theme
+     declares. Every read is `var(--brikka-…)`: a literal here would hide a role that
+     does not resolve, which is the one thing this app exists to show. */
+  body {
+    margin: 0;
+    padding: var(--brikka-space-6);
+    background: var(--brikka-bg-surface);
+    color: var(--brikka-text-default);
+    font-family: var(--brikka-font-sans);
+    font-size: var(--brikka-font-size-md);
+    line-height: var(--brikka-line-height-md);
+  }
+
+  main {
+    margin-inline: auto;
+    max-width: calc(var(--brikka-measure-md) * 2);
+  }
+</style>
