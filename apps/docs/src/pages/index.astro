@@ -407,6 +407,23 @@ const itemsOf = (group: { id: string; names: string[] }): Item[] =>
     overflow: hidden;
   }
 
+  /* A shadow is drawn outside the box it belongs to, and `overflow: hidden` on a sample the
+     exact size of that box cut it away entirely — the row showed a rectangle with no shadow
+     and looked like a token that does not resolve. The box also needs a surface: a transparent
+     element casts a shadow onto itself and reads as an outline, not as something lifted. */
+  .token[data-kind='shadow'] .sample {
+    overflow: visible;
+    padding: var(--brikka-space-4);
+    /* The sample's own field is the page surface, not the row's, so the shadow is the only
+       difference between the box and what it sits on. Anything else and the box separates by
+       colour and hides whether the shadow does anything. */
+    background: var(--brikka-bg-surface);
+  }
+
+  .box-shadow {
+    background: var(--brikka-bg-surface);
+  }
+
   .meta {
     display: grid;
     flex: 1 1 auto;
