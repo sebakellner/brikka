@@ -130,15 +130,16 @@ A status is never one colour, because a status is always something read on somet
 families carry the vocabulary, each with a surface, the ink read on it, and an edge that keeps the
 tint coherent with its family.
 
-A family leads its own names — `--brikka-success-bg`, `--brikka-success-text`,
-`--brikka-success-border` — so a status reads as one vocabulary of three roles rather than as three
-prefixes.
+A family is a vocabulary, not a namespace: `--brikka-bg-success`, `--brikka-text-success` and
+`--brikka-border-success` are three roles that share a family, and each one leads with the property
+it is read under like every other role. The property rule therefore covers all nine, and a status
+read under the wrong property is a failure the check can see.
 
 | Family    | Surface      | Ink            | Edge             |
 | --------- | ------------ | -------------- | ---------------- |
-| `success` | `success.bg` | `success.text` | `success.border` |
-| `warning` | `warning.bg` | `warning.text` | `warning.border` |
-| `info`    | `info.bg`    | `info.text`    | `info.border`    |
+| `success` | `bg-success` | `text-success` | `border-success` |
+| `warning` | `bg-warning` | `text-warning` | `border-warning` |
+| `info`    | `bg-info`    | `text-info`    | `border-info`    |
 
 **`danger` is the fourth family, and it is two roles rather than three**: `text-danger` and
 `border-danger`. A failure is an ink and an edge on a surface someone else chose, and a red surface
@@ -179,11 +180,9 @@ claim the family — cheaper than deleting it and adding it back.
 
 ## Naming
 
-- `--brikka-` and then the path, kebab-cased: `bg.surface-muted` is `--brikka-bg-surface-muted`.
-- A status family is the exception: its name leads with the family, `--brikka-success-bg` rather
-  than `--brikka-bg-success`, because one vocabulary of three roles hangs off the family. The
-  property rule cannot check these three, since it reads the property off the name's first segment
-  and a status name's first segment is the family.
+- `--brikka-` and then the path, kebab-cased: `bg.surface-muted` is `--brikka-bg-surface-muted`,
+  and a status follows the same rule: `bg.success` is `--brikka-bg-success`. The family is a
+  vocabulary a reader recognizes, never a prefix that displaces the property.
 - The theme is not part of a name. A role is one name in both themes, and the theme decides its
   value.
 - A token read carries no literal fallback. The only legal default is the variable half of a hook,
