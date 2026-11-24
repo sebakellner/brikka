@@ -1128,7 +1128,7 @@ describe('brikka-slider', () => {
         expect(input.getAttribute('aria-invalid')).to.equal('true');
       }
       expect(getComputedStyle(errorOf(el)).color).to.equal(
-        await colorOf('var(--brikka-text-danger)'),
+        await colorOf('var(--brikka-text-error)'),
       );
       expect(labelOf(el).getAttribute('data-state')).to.equal('invalid');
       expect(el.validity.customError).to.equal(true);

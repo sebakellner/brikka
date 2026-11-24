@@ -29,7 +29,7 @@ describe('brikka-field-error', () => {
     );
 
     expect(getComputedStyle(el).color, 'the error takes the danger role').to.equal(
-      colorOf('var(--brikka-text-danger)'),
+      colorOf('var(--brikka-text-error)'),
     );
     expect(getComputedStyle(el).display, 'a standalone atom still lays out').to.equal('block');
     expect(
@@ -43,7 +43,7 @@ describe('brikka-field-error', () => {
       html`<brikka-field-error>Enter a valid address.</brikka-field-error>`,
     );
 
-    expect(getComputedStyle(el).color).to.equal(colorOf('var(--brikka-text-danger)'));
+    expect(getComputedStyle(el).color).to.equal(colorOf('var(--brikka-text-error)'));
 
     el.setAttribute('data-state', 'error');
     await el.updateComplete;
@@ -51,7 +51,7 @@ describe('brikka-field-error', () => {
     expect(
       getComputedStyle(el).color,
       'the state attribute decorates the control region, and the atom is danger either way',
-    ).to.equal(colorOf('var(--brikka-text-danger)'));
+    ).to.equal(colorOf('var(--brikka-text-error)'));
   });
 
   it('should clip itself to no space while it has no text, with no container involved', async () => {

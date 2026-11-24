@@ -55,7 +55,7 @@ geometry is the gap between the parts.
 | ------------------------------------------------------------------------------------------------------- | --------------------- |
 | `--brikka-text-default`                                                                                 | the label             |
 | `--brikka-text-muted`                                                                                   | the description       |
-| `--brikka-text-danger`                                                                                  | the error             |
+| `--brikka-text-error`                                                                                   | the error             |
 | `--brikka-space-1`                                                                                      | the gap between parts |
 | `--brikka-font-sans`, `--brikka-font-size-sm`, `--brikka-line-height-md`, `--brikka-font-weight-medium` | typography            |
 
@@ -145,6 +145,6 @@ longer depends on a container noticing it.
 
 ### `brikka-field-error`
 
-| Slot        | Content     | Notes                              |
-| ----------- | ----------- | ---------------------------------- |
-| _(default)_ | the message | paints with `--brikka-text-danger` |
+| Slot        | Content     | Notes                             |
+| ----------- | ----------- | --------------------------------- |
+| _(default)_ | the message | paints with `--brikka-text-error` |

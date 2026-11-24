@@ -15,7 +15,7 @@ export class BrikkaFieldError extends LitElement {
       font-family: var(--brikka-font-sans);
       font-size: var(--brikka-font-size-sm);
       line-height: var(--brikka-line-height-md);
-      color: var(--brikka-text-danger);
+      color: var(--brikka-text-error);
     }
 
     :host([hidden]) {

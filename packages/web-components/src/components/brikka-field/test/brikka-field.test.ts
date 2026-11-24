@@ -165,7 +165,7 @@ describe('brikka-field', () => {
     expect(
       getComputedStyle(part(el, 'brikka-field-label')).color,
       'the label paints danger',
-    ).to.equal(await colorOf('var(--brikka-text-danger)'));
+    ).to.equal(await colorOf('var(--brikka-text-error)'));
     expect(
       getComputedStyle(part(el, 'brikka-field-description')).color,
       'the description keeps its muted role: the state names, it does not repaint it',
@@ -173,7 +173,7 @@ describe('brikka-field', () => {
     expect(
       getComputedStyle(part(el, 'brikka-field-error')).color,
       'and the error is danger with or without the state',
-    ).to.equal(await colorOf('var(--brikka-text-danger)'));
+    ).to.equal(await colorOf('var(--brikka-text-error)'));
 
     el.invalid = false;
     await el.updateComplete;

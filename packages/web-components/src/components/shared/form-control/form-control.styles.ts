@@ -23,7 +23,7 @@ export const formControlStyles = css`
   }
 
   .label[data-state='invalid'] {
-    color: var(--brikka-text-danger);
+    color: var(--brikka-text-error);
   }
 
   .label[data-disabled] {
@@ -36,7 +36,7 @@ export const formControlStyles = css`
 
   .required {
     margin-inline-start: var(--brikka-space-1);
-    color: var(--brikka-text-danger);
+    color: var(--brikka-text-error);
   }
 
   .control {
@@ -77,7 +77,7 @@ export const formControlStyles = css`
   }
 
   .control[aria-invalid='true'] {
-    border-color: var(--brikka-border-danger);
+    border-color: var(--brikka-border-error);
   }
 
   .message {
@@ -89,7 +89,7 @@ export const formControlStyles = css`
   }
 
   .message[data-state='error'] {
-    color: var(--brikka-text-danger);
+    color: var(--brikka-text-error);
   }
 
   .message:empty {

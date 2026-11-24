@@ -486,10 +486,10 @@ describe('brikka-checkbox', () => {
     expect(innerError(el).textContent!.trim()).to.equal('You have to accept the terms.');
     expect(innerInput(el).getAttribute('aria-invalid')).to.equal('true');
     expect(getComputedStyle(innerError(el)).color).to.equal(
-      await colorOf('var(--brikka-text-danger)'),
+      await colorOf('var(--brikka-text-error)'),
     );
     expect(getComputedStyle(innerBox(el)).borderTopColor).to.equal(
-      await colorOf('var(--brikka-border-danger)'),
+      await colorOf('var(--brikka-border-error)'),
     );
   });
 
@@ -515,7 +515,7 @@ describe('brikka-checkbox', () => {
     expect(
       getComputedStyle(innerError(el)).color,
       'the error state is the danger role the region paints',
-    ).to.equal(await colorOf('var(--brikka-text-danger)'));
+    ).to.equal(await colorOf('var(--brikka-text-error)'));
     expect(innerInput(el).getAttribute('aria-invalid')).to.equal('true');
   });
 
@@ -688,7 +688,7 @@ describe('brikka-checkbox', () => {
     );
 
     expect(getComputedStyle(innerRequired(el)!).color).to.equal(
-      await colorOf('var(--brikka-text-danger)'),
+      await colorOf('var(--brikka-text-error)'),
     );
   });
 
@@ -715,7 +715,7 @@ describe('brikka-checkbox', () => {
     await el.updateComplete;
 
     expect(getComputedStyle(innerLabel(el)).color).to.equal(
-      await colorOf('var(--brikka-text-danger)'),
+      await colorOf('var(--brikka-text-error)'),
     );
   });
 
@@ -742,7 +742,7 @@ describe('brikka-checkbox', () => {
     await el.updateComplete;
 
     expect(getComputedStyle(innerLabel(el)).color).to.equal(
-      await colorOf('var(--brikka-text-danger)'),
+      await colorOf('var(--brikka-text-error)'),
     );
   });
 
@@ -762,7 +762,7 @@ describe('brikka-checkbox', () => {
     expect(
       getComputedStyle(label).color,
       'the state the attribute names is also the role the row paints',
-    ).to.equal(await colorOf('var(--brikka-text-danger)'));
+    ).to.equal(await colorOf('var(--brikka-text-error)'));
     expect(
       label.hasAttribute('data-disabled'),
       'the dim keys off disabled, which the state precedence cannot take away',
@@ -783,7 +783,7 @@ describe('brikka-checkbox', () => {
     el.error = 'You have to accept the terms.';
     await el.updateComplete;
 
-    expect(getComputedStyle(atom).color).to.equal(await colorOf('var(--brikka-text-danger)'));
+    expect(getComputedStyle(atom).color).to.equal(await colorOf('var(--brikka-text-error)'));
   });
 
   it('should leave a hosted label atom undimmed while the box is disabled', async () => {

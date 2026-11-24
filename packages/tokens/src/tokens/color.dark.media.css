@@ -20,7 +20,7 @@
     --brikka-text-default: var(--brikka-palette-neutral-100);
     --brikka-text-muted: var(--brikka-palette-neutral-400);
     --brikka-text-on-accent: var(--brikka-palette-white);
-    --brikka-text-danger: var(--brikka-palette-red-400);
+    --brikka-text-error: var(--brikka-palette-red-400);
     --brikka-text-on-selected: var(--brikka-palette-neutral-100);
     --brikka-text-success: var(--brikka-palette-green-400);
     --brikka-text-warning: var(--brikka-palette-yellow-300);
@@ -28,7 +28,7 @@
     --brikka-border-on-accent: var(--brikka-palette-neutral-900);
     --brikka-border-default: var(--brikka-palette-neutral-500);
     --brikka-border-strong: var(--brikka-palette-neutral-400);
-    --brikka-border-danger: var(--brikka-palette-red-400);
+    --brikka-border-error: var(--brikka-palette-red-400);
     --brikka-border-subtle: var(--brikka-palette-neutral-800);
     --brikka-border-success: var(--brikka-palette-green-700);
     --brikka-border-warning: var(--brikka-palette-yellow-700);

@@ -421,7 +421,7 @@ describe('brikka-native-select', () => {
     expect(mark!.textContent, 'the mark is a star').to.equal('*');
     expect(mark!.getAttribute('aria-hidden'), 'and decoration for the eye').to.equal('true');
     expect(getComputedStyle(mark!).color, 'painted with the danger role').to.equal(
-      await colorOf('var(--brikka-text-danger)'),
+      await colorOf('var(--brikka-text-error)'),
     );
   });
 
@@ -465,7 +465,7 @@ describe('brikka-native-select', () => {
 
     expect(error.textContent!.trim(), 'the region carries the message').to.equal('Pick a channel');
     expect(getComputedStyle(innerLabel(el)).color, 'the label paints the danger role').to.equal(
-      await colorOf('var(--brikka-text-danger)'),
+      await colorOf('var(--brikka-text-error)'),
     );
     expect(innerSelect(el).getAttribute('aria-invalid')).to.equal('true');
     expect(

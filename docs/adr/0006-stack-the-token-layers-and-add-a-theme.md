@@ -58,10 +58,10 @@ theme is active.
 | `text-default`     | `neutral-900` | `neutral-100` |
 | `text-muted`       | `neutral-600` | `neutral-400` |
 | `text-on-accent`   | `white`       | `white`       |
-| `text-danger`      | `red-700`     | `red-400`     |
+| `text-error`       | `red-700`     | `red-400`     |
 | `border-default`   | `neutral-500` | `neutral-500` |
 | `border-strong`    | `neutral-600` | `neutral-400` |
-| `border-danger`    | `red-700`     | `red-400`     |
+| `border-error`     | `red-700`     | `red-400`     |
 | `focus-ring`       | `sky-600`     | `sky-400`     |
 
 The dark column is not a guess: it is the column the contrast assertions rewrote.

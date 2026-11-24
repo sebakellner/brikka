@@ -143,9 +143,9 @@ it holds a message is `data-empty`, not that attribute.
 | `--brikka-bg-surface`                                                                                                            | field surface                                    |
 | `--brikka-border-default`                                                                                                        | field border                                     |
 | `--brikka-border-strong`                                                                                                         | border on hover                                  |
-| `--brikka-border-danger`                                                                                                         | border on error                                  |
+| `--brikka-border-error`                                                                                                          | border on error                                  |
 | `--brikka-text-default`                                                                                                          | input text and label                             |
-| `--brikka-text-danger`                                                                                                           | message on error, label while invalid, `*`       |
+| `--brikka-text-error`                                                                                                            | message on error, label while invalid, `*`       |
 | `--brikka-text-muted`                                                                                                            | placeholder, message, the value while disabled   |
 | `--brikka-opacity-disabled`                                                                                                      | the field and its label row while disabled       |
 | `--brikka-border-width`                                                                                                          | border width                                     |
@@ -255,7 +255,7 @@ The control writes its state on its own label — this `<label>`, and a
 
 | Value      | When                                               | Paints                      |
 | ---------- | -------------------------------------------------- | --------------------------- |
-| `invalid`  | `error` is set, or the native message is showing   | `--brikka-text-danger`      |
+| `invalid`  | `error` is set, or the native message is showing   | `--brikka-text-error`       |
 | `disabled` | `disabled`, or the field is inside a disabled form | `--brikka-opacity-disabled` |
 
 A field that is both is painted with the danger colour and still dimmed: the
@@ -272,7 +272,7 @@ it once, and a `brikka-field-label` hosted through the `label` slot is dimmed by
 row it sits in, not a second time on its own.
 
 A `required` field marks its label with a `*` (`part="required"`,
-`aria-hidden="true"`) in `--brikka-text-danger`, the same role as the error text. It
+`aria-hidden="true"`) in `--brikka-text-error`, the same role as the error text. It
 sits on the label's line, so a slotted `brikka-field-label` does not push it to its
 own row. The mark is not rendered while the field has no label, and it is never
 the only signal — the native `required` attribute is what announces the state.

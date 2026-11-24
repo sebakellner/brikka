@@ -86,7 +86,7 @@
   --brikka-text-default: var(--brikka-palette-neutral-900);
   --brikka-text-muted: var(--brikka-palette-neutral-600);
   --brikka-text-on-accent: var(--brikka-palette-white);
-  --brikka-text-danger: var(--brikka-palette-red-700);
+  --brikka-text-error: var(--brikka-palette-red-700);
   --brikka-text-on-selected: var(--brikka-palette-neutral-900);
   --brikka-text-success: var(--brikka-palette-green-800);
   --brikka-text-warning: var(--brikka-palette-yellow-800);
@@ -94,7 +94,7 @@
   --brikka-border-on-accent: var(--brikka-palette-white);
   --brikka-border-default: var(--brikka-palette-neutral-500);
   --brikka-border-strong: var(--brikka-palette-neutral-600);
-  --brikka-border-danger: var(--brikka-palette-red-700);
+  --brikka-border-error: var(--brikka-palette-red-700);
   --brikka-border-subtle: var(--brikka-palette-neutral-200);
   --brikka-border-success: var(--brikka-palette-green-600);
   --brikka-border-warning: var(--brikka-palette-yellow-700);

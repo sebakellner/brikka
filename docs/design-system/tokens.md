@@ -86,7 +86,7 @@ theme is never part of its name.
 | `text-inverse`     | Text read on `bg-inverse`.                             | `bg-inverse`.                        |
 | `text-on-accent`   | Text and icons read on an accent or a strong surface.  | `bg-accent` and the strong surfaces. |
 | `text-on-selected` | The text of a chosen row or option, on `bg-selected`.  | `bg-selected`.                       |
-| `text-danger`      | Text that names a failure or a destructive action.     | The page surfaces.                   |
+| `text-error`       | Text that names a failure or a destructive action.     | The page surfaces.                   |
 
 Every ink in this group is the text class, measured at 4.5:1 against the surface its row names, and a
 surface of its own colour never takes the body ink: `bg-inverse` reads `text-inverse`, `bg-accent`
@@ -105,7 +105,7 @@ composited surface.
 | `border-strong`    | A control's boundary, one step harder than at rest. | A boundary |
 | `border-subtle`    | The line between two things inside one object.      | A divider  |
 | `border-on-accent` | Borders drawn on an accent or strong surface.       | A boundary |
-| `border-danger`    | The border of an invalid control.                   | A boundary |
+| `border-error`     | The border of an invalid control.                   | A boundary |
 
 Every boundary is measured at 3:1 against the surface it sits on. `border-subtle` is not one: a
 divider separates two things inside an object instead of framing it. The three status edges are not
@@ -141,13 +141,13 @@ read under the wrong property is a failure the check can see.
 | `warning` | `bg-warning` | `text-warning` | `border-warning` |
 | `info`    | `bg-info`    | `text-info`    | `border-info`    |
 
-**`danger` is the fourth family, and it is two roles rather than three**: `text-danger` and
-`border-danger`. A failure is an ink and an edge on a surface someone else chose, and a red surface
-in the graph would be a wash no reader asked for. `text-danger` is the role a form reads, and the
+**`error` is the fourth family, and it is two roles rather than three**: `text-error` and
+`border-error`. A failure is an ink and an edge on a surface someone else chose, and a red surface
+in the graph would be a wash no reader asked for. `text-error` is the role a form reads, and the
 required marker in a label is the same ink.
 
 The ink of a status family is held to body contrast against its own tint **and** against the page
-surface, because a status is read in both places; `text-danger`, which has no tint of its own, is
+surface, because a status is read in both places; `text-error`, which has no tint of its own, is
 held against whatever surface it is read on. A status border is not held to the boundary rule: the
 tint and the ink carry the state, and an edge chosen to stay in the family does not have to be
 visible on its own. The thresholds are in [Accessibility](accessibility.md).

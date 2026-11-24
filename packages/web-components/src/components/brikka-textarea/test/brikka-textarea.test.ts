@@ -174,7 +174,7 @@ describe('brikka-textarea', () => {
     expect(
       getComputedStyle(innerError(el)).color,
       'the error state is the danger role the region paints',
-    ).to.equal(await colorOf('var(--brikka-text-danger)'));
+    ).to.equal(await colorOf('var(--brikka-text-error)'));
     expect(innerTextarea(el).getAttribute('aria-invalid')).to.equal('true');
     expect(innerTextarea(el).getAttribute('aria-describedby')).to.equal(innerError(el).id);
   });
@@ -222,8 +222,8 @@ describe('brikka-textarea', () => {
     const el = await fixture<BrikkaTextarea>(
       html`<brikka-textarea error="Required">${labelAtom('Bio')}</brikka-textarea>`,
     );
-    el.style.setProperty('--brikka-border-danger', 'rgb(6, 6, 6)');
-    el.style.setProperty('--brikka-text-danger', 'rgb(7, 7, 7)');
+    el.style.setProperty('--brikka-border-error', 'rgb(6, 6, 6)');
+    el.style.setProperty('--brikka-text-error', 'rgb(7, 7, 7)');
 
     expect(getComputedStyle(innerTextarea(el)).borderTopColor).to.equal('rgb(6, 6, 6)');
     expect(getComputedStyle(innerError(el)).color).to.equal('rgb(7, 7, 7)');
@@ -591,7 +591,7 @@ describe('brikka-textarea', () => {
     );
 
     expect(getComputedStyle(innerRequired(el)!).color).to.equal(
-      await colorOf('var(--brikka-text-danger)'),
+      await colorOf('var(--brikka-text-error)'),
     );
   });
 
@@ -616,7 +616,7 @@ describe('brikka-textarea', () => {
     );
 
     expect(getComputedStyle(innerLabel(el)).color).to.equal(
-      await colorOf('var(--brikka-text-danger)'),
+      await colorOf('var(--brikka-text-error)'),
     );
   });
 
@@ -640,7 +640,7 @@ describe('brikka-textarea', () => {
     );
 
     expect(getComputedStyle(innerLabel(el)).color).to.equal(
-      await colorOf('var(--brikka-text-danger)'),
+      await colorOf('var(--brikka-text-error)'),
     );
   });
 
@@ -653,7 +653,7 @@ describe('brikka-textarea', () => {
     /* The paint is asserted and the internal `data-state` is not; `data-disabled` stays an
      * assertion because C5 documents it as the hook a consumer styles the atom on. */
     expect(getComputedStyle(label).color, 'invalid wins the state the label paints').to.equal(
-      await colorOf('var(--brikka-text-danger)'),
+      await colorOf('var(--brikka-text-error)'),
     );
     expect(
       label.hasAttribute('data-disabled'),
@@ -675,7 +675,7 @@ describe('brikka-textarea', () => {
     `);
     const atom = el.querySelector<BrikkaFieldLabel>('brikka-field-label')!;
 
-    expect(getComputedStyle(atom).color).to.equal(await colorOf('var(--brikka-text-danger)'));
+    expect(getComputedStyle(atom).color).to.equal(await colorOf('var(--brikka-text-error)'));
   });
 
   it('should leave a hosted label atom undimmed while the field is disabled', async () => {
@@ -1178,7 +1178,7 @@ describe('brikka-textarea', () => {
       expect(
         getComputedStyle(innerError(el)).color,
         'the error state is the danger role the region paints',
-      ).to.equal(await colorOf('var(--brikka-text-danger)'));
+      ).to.equal(await colorOf('var(--brikka-text-error)'));
       expect(innerTextarea(el).getAttribute('aria-invalid')).to.equal('true');
     });
 
@@ -1219,7 +1219,7 @@ describe('brikka-textarea', () => {
       expect(
         getComputedStyle(innerError(el)).color,
         'the error state is the danger role the region paints',
-      ).to.equal(await colorOf('var(--brikka-text-danger)'));
+      ).to.equal(await colorOf('var(--brikka-text-error)'));
       expect(innerTextarea(el).getAttribute('aria-invalid')).to.equal('true');
     });
 

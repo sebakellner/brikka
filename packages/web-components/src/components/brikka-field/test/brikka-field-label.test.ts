@@ -45,7 +45,7 @@ describe('brikka-field-label', () => {
     expect(
       getComputedStyle(el).color,
       'the state the field states on its part is the role the atom paints',
-    ).to.equal(colorOf('var(--brikka-text-danger)'));
+    ).to.equal(colorOf('var(--brikka-text-error)'));
   });
 
   it('should keep the default text role while the group that hosts it is disabled', async () => {

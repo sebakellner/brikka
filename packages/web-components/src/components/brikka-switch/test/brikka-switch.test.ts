@@ -389,7 +389,7 @@ describe('brikka-switch', () => {
     expect(innerError(el).textContent!.trim()).to.equal(error);
     expect(innerInput(el).getAttribute('aria-invalid')).to.equal('true');
     expect(getComputedStyle(innerError(el)).color).to.equal(
-      await colorOf('var(--brikka-text-danger)'),
+      await colorOf('var(--brikka-text-error)'),
     );
     expect(
       innerLabel(el).getAttribute('data-state'),

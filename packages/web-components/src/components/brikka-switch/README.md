@@ -204,7 +204,7 @@ The control writes its state on its own label row — this `<label>`, and a
 
 | Value      | When                                               | Paints                      |
 | ---------- | -------------------------------------------------- | --------------------------- |
-| `invalid`  | `error` is set, or the native message is showing   | `--brikka-text-danger`      |
+| `invalid`  | `error` is set, or the native message is showing   | `--brikka-text-error`       |
 | `disabled` | `disabled`, or the field is inside a disabled form | `--brikka-opacity-disabled` |
 
 A switch that is both is painted with the danger colour and still dimmed: the

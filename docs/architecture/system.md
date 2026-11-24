@@ -21,7 +21,7 @@ the arrow, and the generated CSS is never edited by hand.
 | Layer     | Lives in                                                                              | Answers                                            | Example                            |
 | --------- | ------------------------------------------------------------------------------------- | -------------------------------------------------- | ---------------------------------- |
 | Primitive | `packages/tokens/tokens/base/color.json` → `palette.*`                                | what colors exist                                  | `--brikka-palette-blue-600`        |
-| Semantic  | `packages/tokens/tokens/role/light.json` → `bg.*`, `text.*`, `border.*`, `focus-ring` | roles read directly by a component                 | `--brikka-text-danger`             |
+| Semantic  | `packages/tokens/tokens/role/light.json` → `bg.*`, `text.*`, `border.*`, `focus-ring` | roles read directly by a component                 | `--brikka-text-error`              |
 | Control   | `packages/tokens/tokens/component/control.json` → `<component>.*`                     | what one control paints, when no role can carry it | `--brikka-button-disabled-opacity` |
 
 The semantic and control layers are **peers, not a stack**: control tokens alias

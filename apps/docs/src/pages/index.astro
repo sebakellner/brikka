@@ -245,7 +245,7 @@ const itemsOf = (group: { id: string; names: string[] }): Item[] =>
   }
 
   .summary[data-empty] {
-    color: var(--brikka-text-danger);
+    color: var(--brikka-text-error);
   }
 
   .level {
@@ -368,7 +368,7 @@ const itemsOf = (group: { id: string; names: string[] }): Item[] =>
   }
 
   .token[data-empty] {
-    outline: var(--brikka-border-width-thick) dashed var(--brikka-border-danger);
+    outline: var(--brikka-border-width-thick) dashed var(--brikka-border-error);
     outline-offset: var(--brikka-focus-ring-offset);
   }
 
@@ -408,7 +408,7 @@ const itemsOf = (group: { id: string; names: string[] }): Item[] =>
 
   .token[data-empty] .value {
     font-weight: var(--brikka-font-weight-semibold);
-    color: var(--brikka-text-danger);
+    color: var(--brikka-text-error);
   }
 
   /* Every box the page draws carries the system's own border, so a fill that does not
@@ -463,7 +463,7 @@ const itemsOf = (group: { id: string; names: string[] }): Item[] =>
   .unclassified {
     margin-block-start: var(--brikka-space-16);
     padding: var(--brikka-space-4);
-    border: var(--brikka-border-width-thick) dashed var(--brikka-border-danger);
+    border: var(--brikka-border-width-thick) dashed var(--brikka-border-error);
     border-radius: var(--brikka-radius-md);
   }
 </style>

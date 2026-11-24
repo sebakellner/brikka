@@ -18,7 +18,7 @@ export class BrikkaFieldLabel extends LitElement {
     }
 
     :host([data-state='invalid']) {
-      color: var(--brikka-text-danger);
+      color: var(--brikka-text-error);
     }
   `;
 
