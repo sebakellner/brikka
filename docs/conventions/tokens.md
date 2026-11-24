@@ -10,21 +10,22 @@ from them — and a component or host that imports one file in isolation gets an
 `var()`. That is why no token read carries a literal fallback: a fallback would be a second
 value to keep true, and AGENTS.md forbids a literal one outright.
 
-| #   | Rule                                                                         | Enforced by         |
-| --- | ---------------------------------------------------------------------------- | ------------------- |
-| R1  | A role is a documented, typed commitment that resolves in every theme        | `pnpm check:tokens` |
-| R2  | In the graph an alias points one layer down, and a role never aliases a role | review              |
-| R3  | The palette is a reference ramp, not a usage list                            | review              |
-| R4  | The token path is the public name                                            | review              |
-| R5  | A role is read under the property it belongs to                              | `pnpm check:tokens` |
-| R6  | A component reads a role for colour and a primitive for everything else      | `pnpm check:tokens` |
-| R7  | Motion is one composite token, and reduced motion zeroes it at the theme     | review              |
-| R8  | Elevation is two shadow tokens, and a shadow is the one unchecked value      | review              |
-| R9  | Stacking is a token when the DOM and the top layer cannot order the surface  | review              |
-| R10 | The palette is declared once, at the root, and a theme re-declares the roles | review, `pnpm test` |
-| R11 | The space base is computed into space, radius, `size` and `icon`             | review              |
-| R12 | Reduced motion replaces the transition composite with a duration alone       | review              |
-| R13 | A configuration axis has a floor, and the computation holds it               | `pnpm test`         |
+| #   | Rule                                                                          | Enforced by         |
+| --- | ----------------------------------------------------------------------------- | ------------------- |
+| R1  | A role is a documented, typed commitment that resolves in every theme         | `pnpm check:tokens` |
+| R2  | In the graph an alias points one layer down, and a role never aliases a role  | review              |
+| R3  | The palette is a reference ramp, not a usage list                             | review              |
+| R4  | The token path is the public name                                             | review              |
+| R5  | A role is read under the property it belongs to                               | `pnpm check:tokens` |
+| R6  | A component reads a role for colour and a primitive for everything else       | `pnpm check:tokens` |
+| R7  | Motion is one composite token, and reduced motion zeroes it at the theme      | review              |
+| R8  | Elevation is two shadow tokens, and a shadow is the one unchecked value       | review              |
+| R9  | Stacking is a token when the DOM and the top layer cannot order the surface   | review              |
+| R10 | The palette is declared once, at the root, and a theme re-declares the roles  | review, `pnpm test` |
+| R11 | The space base is computed into space, radius, `size` and `icon`              | review              |
+| R12 | Reduced motion replaces the transition composite with a duration alone        | review              |
+| R13 | A configuration axis has a floor, and the floor is a token                    | `pnpm test`         |
+| R14 | Disabled is one dimmed factor at `opacity.disabled`, and no role is exchanged | review              |
 
 Before any of these rules, `pnpm check:tokens` asserts **existence**: every
 `--brikka-*` name read inside a CSS string must be a declared token or a hook. No
@@ -302,27 +303,87 @@ way. That is the second half of R7, arriving by this route.
 `prefers-reduced-motion: reduce`, and a second case proves a bare duration still substitutes into the
 composite's slot. The block itself is reviewed, in `packages/tokens/src/theme.css`.
 
-## R13. A configuration axis has a floor, and the computation holds it
+## R13. A configuration axis has a floor, and the floor is a token
 
-**Rule.** The two multipliers a host can move are bounded in the expression that computes from
-them. `--brikka-control-height` is `calc(40px * max(var(--brikka-scale-density), 0.6))`, so the
-height never computes below `24px`, the target WCAG 2.2 AA, 2.5.8 asks for. Every
-`--brikka-font-size-*` is `calc(<rem> * max(var(--brikka-scale-type), 0.875))`, so the smallest,
-`xs` at `0.75rem`, never falls under `10.5px` — the dense-console setting the `type` description
-already offered. The floor lives inside the existing `max()`, adds no token name, and leaves every
-value above it following its axis.
+**Rule.** Each of the two multipliers a host can move is bounded by a named floor, and the
+expression that computes from it reads that name. `--brikka-control-height` is
+`max(calc(40px * var(--brikka-scale-density)), var(--brikka-size-target-min))`, and
+`size.target-min` is `24px`, the target WCAG 2.2 AA, 2.5.8 asks for. Every `--brikka-font-size-*`
+is `calc(<rem> * max(var(--brikka-scale-type), var(--brikka-scale-type-floor)))`, and
+`scale.type-floor` is `0.875`, so the smallest, `xs` at `0.75rem`, never falls under `10.5px` — the
+dense-console setting the `type` description already offered. The two are not the same kind of
+value, and that is why they are two names and not one: the target is an absolute length, because
+SC 2.5.8 is measured in CSS pixels and not in rhythm, so neither the density nor a brand's
+`--brikka-space-base` can move it; the type floor is a multiplier, because what it protects is the
+relationship between the six sizes, and an absolute floor applied step by step would flatten them
+onto one size at a degenerate setting. A preset supplies the multipliers and never a floor.
 
 **Why.** Both multipliers were free, and the published principles promise that no axis produces a
 result below WCAG 2.2 AA. A host that set `--brikka-scale-density: 0.3` got a `12px` control and a
 host that set `--brikka-scale-type: 0.5` got a `6px` caption: a promise a host can configure away is
-not an invariant, and a `max()` in the computation is. The floor belongs there and not in a
-separate token, because a second name is a second thing to read and a floor documented instead of
-computed is one a host skips.
+not an invariant, and a `max()` in the computation is. The floor belongs in the computation and not
+in a documented range, because the host the promise is about is the one who sets a token without
+reading a page.
+
+The first version of this rule wrote the floor as a number inside that `max()` and argued against
+naming it: a second name is a second thing to read, and a floor documented instead of computed is
+one a host skips. Both halves still hold — a floor is not documentation just because it has a name,
+since the expression reads it on the way to every value — and the number is the part that could
+not. `0.6` and `0.875` are not in a file a reader can look them up in, and two numbers meaning the
+same thing drift apart with nothing to notice: the floor and the literal compute the same value at
+every setting an assertion can move, so no computed value can tell them apart.
 
 **Enforced by.** The suite: `packages/tokens/test/axis-floors.test.ts` moves each axis at the root
-and reads the computed value. Density `0.3` has to compute `24px` or more and type scale `0.5` has
-to compute `10.5px` or more, while density `1` still computes `40px` and type scale `1.125` still
-computes `13.5px`, which is what proves the floor is a floor and not a pin.
+and reads the computed value, in both directions. Density `0.3` computes the named target and type
+scale `0.5` computes each step times the named multiplier, while density `1` still computes `40px`
+and type scale `1.125` still computes `13.5px`, which is what proves the floor is a floor and not a
+pin. Because a named floor and a literal carrying the same number compute the same value, the two
+assertions about what a floor _is_ read the declarations in `base.css` and `typography.css` instead
+of a computed length, and they read all six font sizes one by one: `xs` alone would let the other
+five regress to a baked `0.875` unnoticed.
+
+## R14. Disabled is one dimmed factor, and no role is exchanged for it
+
+**Rule.** `opacity.disabled` is the graph's only statement about a control that cannot be used.
+`bg.disabled`, `text.disabled` and `border.disabled` exist in neither theme: a control dims whole at
+`--brikka-opacity-disabled` — for the button, through the one component token R2 leaves in place —
+and it paints no second ink, no second edge and no second surface for the state. The inactive-text
+floor is therefore measured on the composite and never on a role: the control at `opacity.disabled`
+over the surface behind it, with its ink composited against the control's composited surface.
+
+**Why.** A disabled control is a state of the control, not a palette of its own. One factor is one
+value to keep true; three roles are three, each of them has to resolve in both themes, and the
+composite still has to clear the 3:1 floor on top of all three. A role exchanged for a state also
+has to be _chosen_ per control, which is the decision the factor removes: the ink the control
+already reads is the ink it is dimmed with, so the state belongs to the control and not to one
+property of it.
+
+**What it costs.** Two things, and both are measured rather than argued. The dim lands on the whole
+control, so the floor holds only where the control's own surface is the page surface: a filled or
+accent control is dimmed with its own surface, and the pair falls under 3:1. That is an open
+decision about how a filled disabled control is painted, recorded as open in
+[Accessibility](../design-system/accessibility.md) rather than promised here. And the graph's model
+is not yet the product's: the components have not been rebuilt against it and still paint
+`text-muted` for the dimmed ink, which composites below the floor even where the surface is the
+page's. So nothing asserts the class yet — a probe painting the ink this rule names would pass while
+measuring a control the product does not render, and a suite that certifies a guarantee nobody holds
+is the decorative test this repository refuses. The assertion lands with the rebuild, against the
+rendered control.
+
+**Enforced by.** Review, and the shape `pnpm check:tokens` holds: a role that resolves in one theme
+and not the other is refused, so a state that came back as a half-populated family would fail there.
+What no check can see is the decision itself — that a state is one factor — which is why the removal
+was proved the other way round: no component was edited, and the suite is what says nothing read the
+three names.
+
+**Where the reversal is recorded.** Here, not in an ADR, for the reason R10–R13 are rules: the last
+four token-graph decisions live in this document, and the last ADR is
+[0022](../adr/0022-elevation-exists-before-a-component-paints-it.md). Removing the three names
+breaks no stranger's theme, because nothing in this package has ever been published
+([0020](../adr/0020-suspend-changesets-until-the-first-version.md)); once something is, the same
+removal is a breaking change that ships with a migration
+([0012](../adr/0012-the-token-graph-is-the-public-contract.md)), and the reasoning above is
+reopened rather than cited.
 
 ## Scope
 
