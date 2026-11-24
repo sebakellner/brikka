@@ -14,13 +14,72 @@ import '@brikka-ui/tokens/theme.css';
     <meta name="robots" content="noindex" />
   </head>
   <body>
+    <div class="theme-switch" role="group" aria-label="Theme" data-theme-switch>
+      <button type="button" data-set-theme="light" aria-pressed="false">Light</button>
+      <button type="button" data-set-theme="dark" aria-pressed="true">Dark</button>
+    </div>
     <main>
       <slot />
     </main>
   </body>
 </html>
 
+<script>
+  /* The switch is the point of the exercise, not a convenience: the same 181 names have to
+   * resolve in both themes, and the only way to know is to read them again after the theme
+   * changes. The event is the contract with the page — it re-runs its own read pass. */
+  const root = document.documentElement;
+  const buttons = [...document.querySelectorAll<HTMLButtonElement>('[data-set-theme]')];
+
+  const setTheme = (theme: string): void => {
+    root.dataset.theme = theme;
+    for (const button of buttons) {
+      button.setAttribute('aria-pressed', String(button.dataset.setTheme === theme));
+    }
+    document.dispatchEvent(new CustomEvent('brikka:theme', { detail: { theme } }));
+  };
+
+  for (const button of buttons) {
+    button.addEventListener('click', () => setTheme(button.dataset.setTheme ?? 'dark'));
+  }
+
+  setTheme(root.dataset.theme ?? 'dark');
+</script>
+
 <style is:global>
+  /* The switch is a control, so it reads the control tokens rather than inventing a look. */
+  .theme-switch {
+    display: flex;
+    gap: var(--brikka-space-1);
+    justify-content: flex-end;
+    max-inline-size: var(--brikka-container-xl);
+    margin-inline: auto;
+    margin-block-end: var(--brikka-space-4);
+  }
+
+  .theme-switch button {
+    padding-block: var(--brikka-space-1);
+    padding-inline: var(--brikka-space-3);
+    border: var(--brikka-border-width) solid var(--brikka-border-default);
+    border-radius: var(--brikka-radius-full);
+    background: transparent;
+    color: var(--brikka-text-muted);
+    font-family: var(--brikka-font-sans);
+    font-size: var(--brikka-font-size-sm);
+    cursor: pointer;
+  }
+
+  .theme-switch button[aria-pressed='true'] {
+    border-color: var(--brikka-border-strong);
+    background: var(--brikka-bg-surface-muted);
+    color: var(--brikka-text-default);
+  }
+
+  .theme-switch button:focus-visible {
+    outline: var(--brikka-focus-ring-width) solid var(--brikka-focus-ring);
+    outline-offset: var(--brikka-focus-ring-offset);
+  }
+
   /* The canvas is the page's job, and the page paints it with the roles the theme
      declares. Every read is `var(--brikka-…)`: a literal here would hide a role that
      does not resolve, which is the one thing this app exists to show. */

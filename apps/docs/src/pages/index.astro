@@ -30,8 +30,8 @@ const itemsOf = (group: { id: string; names: string[] }): Item[] =>
   <header class="intro">
     <h1>Brikka tokens</h1>
     <p>
-      Every custom property <code>@brikka-ui/tokens</code> declares, painted on the dark surface,
-      ordered by what kind of name it is: a primitive is a reference to a value, a semantic name is a
+      Every custom property <code>@brikka-ui/tokens</code> declares, painted with the roles the
+      theme declares and re-read whenever the theme changes, ordered by what kind of name it is: a primitive is a reference to a value, a semantic name is a
       decision a page composes with, and a component token is a component's own seam.
     </p>
     <p class="summary" data-token-summary data-expected={total}>
@@ -190,36 +190,49 @@ const itemsOf = (group: { id: string; names: string[] }): Item[] =>
 <script>
   /* The computed value, read from the cascade at runtime — never a build step. A custom
    * property the stylesheet does not declare computes to the empty string, and that empty
-   * string is the finding this app exists for: name it, and mark the row. */
+   * string is the finding this app exists for: name it, and mark the row.
+   *
+   * The pass runs again on every theme change, because a role that resolves in one theme and
+   * not the other is exactly the failure the graph is supposed to make impossible. Clearing the
+   * marks first matters: a row that failed in dark must not stay marked after a theme that
+   * answers it. */
   const summary = document.querySelector<HTMLElement>('[data-token-summary]');
-  const root = getComputedStyle(document.documentElement);
   const rows = document.querySelectorAll<HTMLElement>('[data-token]');
 
-  const seen = new Set<string>();
-  const unresolved: string[] = [];
+  const read = (): void => {
+    const root = getComputedStyle(document.documentElement);
+    const seen = new Set<string>();
+    const unresolved: string[] = [];
 
-  for (const row of rows) {
-    const name = row.dataset.token;
-    if (!name || seen.has(name)) continue;
-    seen.add(name);
+    for (const row of rows) {
+      const name = row.dataset.token;
+      if (!name || seen.has(name)) continue;
+      seen.add(name);
 
-    const value = root.getPropertyValue(name).trim();
-    for (const cell of row.querySelectorAll<HTMLElement>('[data-value]')) {
-      cell.textContent = value || 'no value';
+      const value = root.getPropertyValue(name).trim();
+      for (const cell of row.querySelectorAll<HTMLElement>('[data-value]')) {
+        cell.textContent = value || 'no value';
+      }
+      delete row.dataset.empty;
+      if (!value) {
+        row.dataset.empty = 'true';
+        unresolved.push(name);
+      }
     }
-    if (!value) {
-      row.dataset.empty = 'true';
-      unresolved.push(name);
-    }
-  }
 
-  if (summary) {
-    const expected = summary.dataset.expected ?? '?';
-    const missing =
-      unresolved.length === 0 ? 'every name resolves' : `no value: ${unresolved.join(', ')}`;
-    summary.textContent = `${seen.size} of ${expected} names rendered · ${missing}`;
-    if (unresolved.length > 0) summary.dataset.empty = 'true';
-  }
+    if (summary) {
+      const expected = summary.dataset.expected ?? '?';
+      const missing =
+        unresolved.length === 0 ? 'every name resolves' : `no value: ${unresolved.join(', ')}`;
+      const theme = document.documentElement.dataset.theme ?? 'dark';
+      summary.textContent = `${seen.size} of ${expected} names rendered in ${theme} · ${missing}`;
+      if (unresolved.length > 0) summary.dataset.empty = 'true';
+      else delete summary.dataset.empty;
+    }
+  };
+
+  read();
+  document.addEventListener('brikka:theme', read);
 </script>
 
 <style>
