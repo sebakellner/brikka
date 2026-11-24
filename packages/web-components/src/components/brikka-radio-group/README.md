@@ -93,12 +93,12 @@ No new token tier and no hook of the group's own: there is no
 `--brikka-radio-group-*` name. The only hooks in the pair are the item's two
 ([The item](#the-item)), and the group paints no box.
 
-| Token                                                                                                                                                                                   | Paints                                                   |
-| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
-| `--brikka-space-2`                                                                                                                                                                      | the gap between items                                    |
-| `--brikka-space-1`                                                                                                                                                                      | above the first line of an atom, while the atom has text |
-| `--brikka-font-sans`, `--brikka-font-size-sm`, `--brikka-font-weight-medium`, `--brikka-text-default`, `--brikka-text-danger` while invalid, `--brikka-opacity-disabled` while disabled | its label row                                            |
-| `--brikka-text-danger`                                                                                                                                                                  | the required mark                                        |
+| Token                                                                                                                                                                                  | Paints                                                   |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| `--brikka-space-2`                                                                                                                                                                     | the gap between items                                    |
+| `--brikka-space-1`                                                                                                                                                                     | above the first line of an atom, while the atom has text |
+| `--brikka-font-sans`, `--brikka-font-size-sm`, `--brikka-font-weight-medium`, `--brikka-text-default`, `--brikka-text-error` while invalid, `--brikka-opacity-disabled` while disabled | its label row                                            |
+| `--brikka-text-error`                                                                                                                                                                  | the required mark                                        |
 
 The items, the description and the error paint themselves. Theming a group
 means theming the roles.
@@ -340,7 +340,7 @@ The group writes its state on the `brikka-field-label` it hosts, as `data-state`
 
 | Value      | When                                                   | Paints                      |
 | ---------- | ------------------------------------------------------ | --------------------------- |
-| `invalid`  | an `error`, or a `brikka-field-error` with text, shows | `--brikka-text-danger`      |
+| `invalid`  | an `error`, or a `brikka-field-error` with text, shows | `--brikka-text-error`       |
 | `disabled` | the group is disabled, or is inside a disabled form    | `--brikka-opacity-disabled` |
 
 The dim is applied to the group's own label row and to the row of every radio it

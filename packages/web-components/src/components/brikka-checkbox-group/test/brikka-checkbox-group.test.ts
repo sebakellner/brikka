@@ -362,7 +362,7 @@ describe('brikka-checkbox-group', () => {
 
     expect(el.hasAttribute('invalid'), 'the attribute reflects the property').to.equal(true);
     expect(atomState(label), 'the group state reaches its own label').to.equal('invalid');
-    expect(getComputedStyle(label).color).to.equal(await colorOf('var(--brikka-text-danger)'));
+    expect(getComputedStyle(label).color).to.equal(await colorOf('var(--brikka-text-error)'));
     expect(box.getAttribute('aria-invalid'), 'no aria-invalid on a box').to.equal(null);
     expect(box.hasAttribute('invalid'), 'no invalid attribute on a box').to.equal(false);
     expect(atomState(hosted), 'the label a box hosts is the box’s').to.equal(null);
@@ -412,7 +412,7 @@ describe('brikka-checkbox-group', () => {
     expect(mark!.textContent, 'the mark is a star').to.equal('*');
     expect(mark!.getAttribute('aria-hidden'), 'and decoration for the eye').to.equal('true');
     expect(getComputedStyle(mark!).color, 'painted with the danger role').to.equal(
-      await colorOf('var(--brikka-text-danger)'),
+      await colorOf('var(--brikka-text-error)'),
     );
 
     const optional = await fixture<BrikkaCheckboxGroup>(twoBoxes);

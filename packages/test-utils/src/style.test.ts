@@ -8,10 +8,10 @@ describe('the token reader', () => {
     const bodyBefore = document.body.innerHTML;
     const childrenBefore = document.body.childElementCount;
 
-    const danger = colorOf('var(--brikka-text-danger)');
+    const error = colorOf('var(--brikka-text-error)');
     const muted = colorOf('var(--brikka-text-muted)');
 
-    expect(Boolean(danger) && Boolean(muted), 'the two values were resolved').to.equal(true);
+    expect(Boolean(error) && Boolean(muted), 'the two values were resolved').to.equal(true);
     expect(childrenBefore, 'the reader added no element to the page').to.equal(
       document.body.childElementCount,
     );

@@ -176,9 +176,9 @@ styles a count that is on screen and nothing else.
 | `--brikka-bg-surface`                                                                                                            | field surface                                      |
 | `--brikka-border-default`                                                                                                        | field border                                       |
 | `--brikka-border-strong`                                                                                                         | border on hover                                    |
-| `--brikka-border-danger`                                                                                                         | border on error                                    |
+| `--brikka-border-error`                                                                                                          | border on error                                    |
 | `--brikka-text-default`                                                                                                          | field text and label                               |
-| `--brikka-text-danger`                                                                                                           | message on error, label while invalid, `*`         |
+| `--brikka-text-error`                                                                                                            | message on error, label while invalid, `*`         |
 | `--brikka-text-muted`                                                                                                            | placeholder, message, counter, text while disabled |
 | `--brikka-opacity-disabled`                                                                                                      | the field and its label row while disabled         |
 | `--brikka-border-width`                                                                                                          | border width                                       |

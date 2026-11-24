@@ -241,7 +241,7 @@ describe('form reset', () => {
     expect(
       getComputedStyle(innerLabel(email)).color,
       'the invalid row paints the danger role',
-    ).to.equal(await colorOf('var(--brikka-text-danger)'));
+    ).to.equal(await colorOf('var(--brikka-text-error)'));
 
     form.reset();
 

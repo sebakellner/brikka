@@ -250,7 +250,7 @@ const RULES: Rule[] = [
     level: 'semantic',
     title: 'Edges',
     caption: 'The borders that frame, and the divider that does not.',
-    test: /^--brikka-border-(default|strong|subtle|on-accent|danger)$/,
+    test: /^--brikka-border-(default|strong|subtle|on-accent|error)$/,
   },
   {
     id: 'status',

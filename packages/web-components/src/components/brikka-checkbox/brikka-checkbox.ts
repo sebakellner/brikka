@@ -69,7 +69,7 @@ export class BrikkaCheckbox extends FieldControlMixin(LitElement) {
       }
 
       .native[aria-invalid='true'] + .box {
-        border-color: var(--brikka-border-danger);
+        border-color: var(--brikka-border-error);
       }
 
       .native:focus-visible + .box {

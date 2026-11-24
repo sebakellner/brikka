@@ -79,7 +79,7 @@ primitives its atoms already read:
 | `--brikka-space-2`          | the gap between the boxes                                             |
 | `--brikka-text-default`     | the atoms' own label text                                             |
 | `--brikka-text-muted`       | their hint, and the value of a disabled box                           |
-| `--brikka-text-danger`      | their error, the `*` of a required group, and the label while invalid |
+| `--brikka-text-error`       | their error, the `*` of a required group, and the label while invalid |
 | `--brikka-opacity-disabled` | the label row while disabled                                          |
 
 ```css
@@ -266,7 +266,7 @@ label of one:
 
 | Value      | When                                                     | Paints                      |
 | ---------- | -------------------------------------------------------- | --------------------------- |
-| `invalid`  | `invalid` is set, or the field derives it from its error | `--brikka-text-danger`      |
+| `invalid`  | `invalid` is set, or the field derives it from its error | `--brikka-text-error`       |
 | `disabled` | the group is disabled, or is inside a disabled form      | `--brikka-opacity-disabled` |
 
 A label with no state keeps `--brikka-text-default`, which is what the atom paints

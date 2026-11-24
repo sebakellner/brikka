@@ -34,7 +34,7 @@ the first two.
 hand over your values through a preset. You do not write CSS; you turn knobs that already have a
 range.
 
-**Compose.** You put roles in your own markup. `bg-surface` is a surface; `text-danger` is text that
+**Compose.** You put roles in your own markup. `bg-surface` is a surface; `text-error` is text that
 names a problem. There is nothing new to invent — the decisions are taken, and you use them.
 
 **Except.** You adjust one detail of one component — the background of _this_ button — through its
@@ -104,7 +104,7 @@ paints the shadow — and retinting it on the card is the attempt that fails in 
 
 ## Naming
 
-A **role** is named for what it does: `bg-surface`, `text-danger`. A role named after its colour
+A **role** is named for what it does: `bg-surface`, `text-error`. A role named after its colour
 would not survive a redesign.
 
 A **primitive** is named for where it sits in its ramp: `blue-600`, `space.4`. It is a reference, not

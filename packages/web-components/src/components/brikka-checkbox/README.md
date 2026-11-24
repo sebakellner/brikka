@@ -181,7 +181,7 @@ The control writes its state on its own label row — this `<label>`, and a
 
 | Value      | When                                               | Paints                      |
 | ---------- | -------------------------------------------------- | --------------------------- |
-| `invalid`  | `error` is set, or the native message is showing   | `--brikka-text-danger`      |
+| `invalid`  | `error` is set, or the native message is showing   | `--brikka-text-error`       |
 | `disabled` | `disabled`, or the field is inside a disabled form | `--brikka-opacity-disabled` |
 
 A box that is both is painted with the danger colour and still dimmed: the colour
@@ -196,7 +196,7 @@ and a `brikka-field-label` hosted through the `label` slot is dimmed by the row 
 sits in.
 
 A `required` box marks its label with a `*` (`part="required"`,
-`aria-hidden="true"`) in `--brikka-text-danger`, the same role as the error text. It
+`aria-hidden="true"`) in `--brikka-text-error`, the same role as the error text. It
 sits on the label's line, beside the box, so a slotted `brikka-field-label` does not
 push it to its own row. The mark is not rendered while the box has no label, and
 it is never the only signal — the native `required` attribute is what announces

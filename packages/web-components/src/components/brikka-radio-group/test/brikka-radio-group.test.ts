@@ -270,7 +270,7 @@ describe('brikka-radio-group', () => {
     expect(mark!.textContent, 'the mark is a star').to.equal('*');
     expect(mark!.getAttribute('aria-hidden'), 'and decoration for the eye').to.equal('true');
     expect(getComputedStyle(mark!).color, 'painted with the danger role').to.equal(
-      await colorOf('var(--brikka-text-danger)'),
+      await colorOf('var(--brikka-text-error)'),
     );
   });
 

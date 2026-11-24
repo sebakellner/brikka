@@ -140,9 +140,9 @@ that lost. The rules of the folder:
 
 ## Glossary
 
-| Term                | Meaning                                                                                                                                    |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| primitive / palette | a raw declared value (`--brikka-palette-blue-600`). A reference ramp, not a usage list                                                     |
-| semantic role       | a role in `color.json` read **directly** by a component (`--brikka-text-danger`). See R1 in [conventions/tokens.md](conventions/tokens.md) |
-| hook                | a component-level custom property a host may set (`--brikka-button-bg`). The default is a variable, never a literal                        |
-| axis                | a value a host turns instead of editing tokens: theme, density, type scale, brand preset                                                   |
+| Term                | Meaning                                                                                                                                   |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| primitive / palette | a raw declared value (`--brikka-palette-blue-600`). A reference ramp, not a usage list                                                    |
+| semantic role       | a role in `color.json` read **directly** by a component (`--brikka-text-error`). See R1 in [conventions/tokens.md](conventions/tokens.md) |
+| hook                | a component-level custom property a host may set (`--brikka-button-bg`). The default is a variable, never a literal                       |
+| axis                | a value a host turns instead of editing tokens: theme, density, type scale, brand preset                                                  |

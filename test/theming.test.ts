@@ -26,10 +26,10 @@ const LIGHT: Record<string, string> = {
   'text-default': '#1c1917',
   'text-muted': '#57534e',
   'text-on-accent': '#ffffff',
-  'text-danger': '#b91c1c',
+  'text-error': '#b91c1c',
   'border-default': '#78716c',
   'border-strong': '#57534e',
-  'border-danger': '#b91c1c',
+  'border-error': '#b91c1c',
   'focus-ring': '#0284c7',
 };
 
@@ -42,10 +42,10 @@ const DARK: Record<string, string> = {
   'text-default': '#f5f5f4',
   'text-muted': '#a8a29e',
   'text-on-accent': '#ffffff',
-  'text-danger': '#f87171',
+  'text-error': '#f87171',
   'border-default': '#78716c',
   'border-strong': '#a8a29e',
-  'border-danger': '#f87171',
+  'border-error': '#f87171',
   'focus-ring': '#38bdf8',
 };
 

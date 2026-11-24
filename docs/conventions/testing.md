@@ -221,7 +221,7 @@ const el = await fixture<BrikkaX>(
   html`<brikka-x><brikka-field-label>Email</brikka-field-label></brikka-x>`,
 );
 expect(getComputedStyle(inner(el)).borderTopColor).to.equal(
-  await colorOf('var(--brikka-border-danger)'),
+  await colorOf('var(--brikka-border-error)'),
 );
 ```
 

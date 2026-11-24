@@ -84,7 +84,7 @@
         "$value": "{palette.white}",
         "$description": "Text and icons read on an accent or strong surface."
       },
-      "danger": {
+      "error": {
         "$value": "{palette.red-700}",
         "$description": "Text that names a failure or a destructive action."
       },
@@ -118,7 +118,7 @@
         "$value": "{palette.neutral-600}",
         "$description": "A border that reads as a boundary rather than a hint."
       },
-      "danger": {
+      "error": {
         "$value": "{palette.red-700}",
         "$description": "The border of an invalid control."
       },

@@ -104,9 +104,9 @@ The label state, the message regions and the `*` are the shared field anatomy:
 | `--brikka-bg-surface`                                                                                                            | control surface                              |
 | `--brikka-border-default`                                                                                                        | control border                               |
 | `--brikka-border-strong`                                                                                                         | border on hover                              |
-| `--brikka-border-danger`                                                                                                         | border on error                              |
+| `--brikka-border-error`                                                                                                          | border on error                              |
 | `--brikka-text-default`                                                                                                          | control text and label                       |
-| `--brikka-text-danger`                                                                                                           | message on error, label while invalid, `*`   |
+| `--brikka-text-error`                                                                                                            | message on error, label while invalid, `*`   |
 | `--brikka-text-muted`                                                                                                            | message, the value while disabled            |
 | `--brikka-opacity-disabled`                                                                                                      | the control and its label row while disabled |
 | `--brikka-border-width`                                                                                                          | border width                                 |
