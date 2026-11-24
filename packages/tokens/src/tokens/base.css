@@ -1,4 +1,9 @@
 :root {
+  --brikka-container-sm: 640px;
+  --brikka-container-md: 768px;
+  --brikka-container-lg: 1024px;
+  --brikka-container-xl: 1280px;
+  --brikka-container-2xl: 1536px;
   --brikka-elevation-color: rgb(28 25 23 / 0.12);
   --brikka-measure-sm: 45ch;
   --brikka-measure-md: 65ch;

@@ -1,0 +1,25 @@
+{
+  "container": {
+    "$type": "dimension",
+    "sm": {
+      "$value": "640px",
+      "$description": "The widest a content column runs from `sm` up: as wide as the breakpoint that opens it, and asserted against it so the pair cannot drift."
+    },
+    "md": {
+      "$value": "768px",
+      "$description": "The widest a content column runs from `md` up."
+    },
+    "lg": {
+      "$value": "1024px",
+      "$description": "The widest a content column runs from `lg` up."
+    },
+    "xl": {
+      "$value": "1280px",
+      "$description": "The widest a content column runs from `xl` up."
+    },
+    "2xl": {
+      "$value": "1536px",
+      "$description": "The widest a content column runs from `2xl` up: the last one before a page should stop growing."
+    }
+  }
+}

@@ -275,6 +275,7 @@ export default {
         only(
           'border-width',
           'border-width-thick',
+          'container',
           'duration',
           'easing',
           'elevation',

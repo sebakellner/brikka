@@ -14,31 +14,32 @@ token source, and a page that copies one is wrong the first time the palette mov
 
 ## Primitive and composite families
 
-| Family                | Carries                                                                                                                                                                              |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `palette`             | 64 steps in 7 ramps (neutral, blue, green, yellow, orange, red, sky) plus white                                                                                                      |
-| `space`               | 12 steps, `0` to `16`, each `calc(base * n)`                                                                                                                                         |
-| `size`                | 32 / 40 / 48 / 64 for a subject: an avatar, a thumbnail, a preview — plus `target-min`, the absolute floor under a control's height, which is a floor and not a square               |
-| `icon`                | 16 / 20 / 24, aligned to text                                                                                                                                                        |
-| `radius`              | `none`, `sm`, `md`, `lg`, `xl`, `full` — the last is the pill                                                                                                                        |
-| `border-width`        | 1px, and `border-width-thick` 2px                                                                                                                                                    |
-| `focus-ring-width`    | 2px — the ring's own thickness, a value rather than a role                                                                                                                           |
-| `focus-ring-offset`   | 1px — the gap the ring leaves around the control it marks                                                                                                                            |
-| `font`                | two stacks: `sans`, `mono`                                                                                                                                                           |
-| `font-size`           | `xs` to `2xl`, every one multiplied by the type scale                                                                                                                                |
-| `font-weight`         | `regular`, `medium`, `semibold`, `bold`                                                                                                                                              |
-| `line-height`         | `tight`, `md`, `relaxed`                                                                                                                                                             |
-| `letter-spacing`      | `tight`, `normal`                                                                                                                                                                    |
-| `typography`          | six text styles: `heading-lg/md/sm`, `body-md/sm`, `label-md`                                                                                                                        |
-| `measure`             | `sm` 45ch, `md` 65ch — how wide a line may get                                                                                                                                       |
-| `duration` / `easing` | three durations, four curves                                                                                                                                                         |
-| `transition`          | the one timing a component reads: duration and easing together                                                                                                                       |
-| `opacity`             | one step, `disabled`: how much a whole control fades when it cannot be used                                                                                                          |
-| `elevation`           | one tint, two shadows: `resting`, `floating`                                                                                                                                         |
-| `breakpoint`          | five widths — `sm` 640, `md` 768, `lg` 1024, `xl` 1280, `2xl` 1536 — exported as **numbers**, because `@media` cannot read a custom property                                         |
-| `z-index`             | five layers: `base`, `dropdown`, `overlay`, `modal`, `toast` — and no component reads one: a dialog and a popover paint in the browser's top layer, which no `z-index` competes with |
-| `scale`               | the two multipliers a host turns: `type`, floored by `type-floor`; `density`                                                                                                         |
-| `control`             | what every control shares: `height`, computed from the density and floored at `size.target-min`, and `disabled-opacity`, the factor every unavailable control is dimmed at           |
+| Family                | Carries                                                                                                                                                                                   |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `palette`             | 64 steps in 7 ramps (neutral, blue, green, yellow, orange, red, sky) plus white                                                                                                           |
+| `space`               | 12 steps, `0` to `16`, each `calc(base * n)`                                                                                                                                              |
+| `size`                | 32 / 40 / 48 / 64 for a subject: an avatar, a thumbnail, a preview — plus `target-min`, the absolute floor under a control's height, which is a floor and not a square                    |
+| `icon`                | 16 / 20 / 24, aligned to text                                                                                                                                                             |
+| `radius`              | `none`, `sm`, `md`, `lg`, `xl`, `full` — the last is the pill                                                                                                                             |
+| `border-width`        | 1px, and `border-width-thick` 2px                                                                                                                                                         |
+| `focus-ring-width`    | 2px — the ring's own thickness, a value rather than a role                                                                                                                                |
+| `focus-ring-offset`   | 1px — the gap the ring leaves around the control it marks                                                                                                                                 |
+| `font`                | two stacks: `sans`, `mono`                                                                                                                                                                |
+| `font-size`           | `xs` to `2xl`, every one multiplied by the type scale                                                                                                                                     |
+| `font-weight`         | `regular`, `medium`, `semibold`, `bold`                                                                                                                                                   |
+| `line-height`         | `tight`, `md`, `relaxed`                                                                                                                                                                  |
+| `letter-spacing`      | `tight`, `normal`                                                                                                                                                                         |
+| `typography`          | six text styles: `heading-lg/md/sm`, `body-md/sm`, `label-md`                                                                                                                             |
+| `measure`             | `sm` 45ch, `md` 65ch — how wide a line may get                                                                                                                                            |
+| `duration` / `easing` | three durations, four curves                                                                                                                                                              |
+| `transition`          | the one timing a component reads: duration and easing together                                                                                                                            |
+| `opacity`             | one step, `disabled`: how much a whole control fades when it cannot be used                                                                                                               |
+| `elevation`           | one tint, two shadows: `resting`, `floating`                                                                                                                                              |
+| `container`           | five max widths, one per breakpoint: how wide a content column may run. A container mirrors its breakpoint on purpose and a suite asserts the pair, so moving one without the other fails |
+| `breakpoint`          | five widths — `sm` 640, `md` 768, `lg` 1024, `xl` 1280, `2xl` 1536 — exported as **numbers**, because `@media` cannot read a custom property                                              |
+| `z-index`             | five layers: `base`, `dropdown`, `overlay`, `modal`, `toast` — and no component reads one: a dialog and a popover paint in the browser's top layer, which no `z-index` competes with      |
+| `scale`               | the two multipliers a host turns: `type`, floored by `type-floor`; `density`                                                                                                              |
+| `control`             | what every control shares: `height`, computed from the density and floored at `size.target-min`, and `disabled-opacity`, the factor every unavailable control is dimmed at                |
 
 Three of those rows are families of **composites** rather than primitives: `typography`,
 `transition`, and the two `elevation` shadows. A composite carries no value of its own — it is the one
