@@ -64,8 +64,10 @@ for (const file of walk(TOKENS_CSS_DIR)) {
   for (const name of names(read(file))) declared.add(name);
 }
 
-const hooks = new Set();
-for (const [, name] of read(HOOKS_SOURCE).matchAll(/'(--brikka-[a-z0-9-]+)'/g)) hooks.add(name);
+/* The component's own inventory, generated from the component sources by `generate-hooks.mjs`
+ * and gated for freshness in `test:checks`. The design system does not carry it: a
+ * `--brikka-button-bg` is the button's name, not the graph's. */
+const hooks = new Set(JSON.parse(read(HOOKS_SOURCE)));
 
 const semantic = names(read(COLOR_CSS)).filter((name) => !name.startsWith(PRIMITIVE));
 if (semantic.length === 0) {

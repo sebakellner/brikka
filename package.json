@@ -11,6 +11,7 @@
   "scripts": {
     "build:tokens": "style-dictionary build --config packages/tokens/style-dictionary.config.mjs && pnpm --filter @brikka-ui/tokens build",
     "build:llms": "node scripts/build-llms-index.mjs",
+    "generate:hooks": "node scripts/generate-hooks.mjs",
     "build:manifest": "cem analyze --config custom-elements-manifest.config.mjs && node scripts/normalize-manifest.mjs",
     "changeset": "changeset",
     "changeset:version": "changeset version",
