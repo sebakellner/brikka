@@ -1,5 +1,7 @@
 .atl/
 .codegraph/
+apps/docs/.astro/
+apps/docs/dist/
 dist/
 node_modules/
 odd/
