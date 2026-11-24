@@ -38,9 +38,9 @@ token source, and a page that copies one is wrong the first time the palette mov
 | `breakpoint`          | five widths — `sm` 640, `md` 768, `lg` 1024, `xl` 1280, `2xl` 1536 — exported as **numbers**, because `@media` cannot read a custom property                                         |
 | `z-index`             | five layers: `base`, `dropdown`, `overlay`, `modal`, `toast` — and no component reads one: a dialog and a popover paint in the browser's top layer, which no `z-index` competes with |
 | `scale`               | the two multipliers a host turns: `type`, floored by `type-floor`; `density`                                                                                                         |
-| `control-height`      | computed from the density, floored at `size.target-min`                                                                                                                              |
+| `control`             | what every control shares: `height`, computed from the density and floored at `size.target-min`, and `disabled-opacity`, the factor every unavailable control is dimmed at           |
 
-Two of those families carry a floor, and the floors are not the same kind of thing. `control-height`
+Two of those families carry a floor, and the floors are not the same kind of thing. `control.height`
 is floored in **pixels**: `size.target-min` is 24, the target 2.5.8 asks for, because that rule is
 measured in CSS pixels and not in rhythm — neither the density nor a base a brand supplies can move
 it. The type scale is floored in the **multiplier**, at `scale.type-floor` 0.875, because what it
@@ -164,9 +164,9 @@ primitive does not, and two scales for one dimension would drift until a gap is 
 opacity, rather than repainted: one factor takes the ink, the edge and the surface down together, and
 the alternative is three roles — a surface, an ink and a border — each of which has to stay true in
 two themes for a state a component can already express with one property. `opacity.disabled` is that
-factor, and `--brikka-button-disabled-opacity` is a component's own copy of it: it holds no value,
-defaults to the primitive, and exists so a button can be quietened without a rule that names the
-button in the graph. Material says the same thing with an overlay alpha; the reason it is one name
+factor, and `--brikka-control-disabled-opacity` is where the graph says so: it holds no value,
+defaults to the primitive, and every control reads it, so a component that needs its own seam
+declares a hook over that one name instead of inventing a second factor. Material says the same thing with an overlay alpha; the reason it is one name
 and not a scale is that the graph needs one answer, not a ladder to choose from.
 
 **Gradient and stroke-style tokens.** Nothing here paints a gradient, and a stroke style is a canvas

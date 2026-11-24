@@ -1,3 +1,4 @@
 :root {
-  --brikka-button-disabled-opacity: var(--brikka-opacity-disabled);
+  --brikka-control-height: max(calc(40px * var(--brikka-scale-density)), var(--brikka-size-target-min));
+  --brikka-control-disabled-opacity: var(--brikka-opacity-disabled);
 }

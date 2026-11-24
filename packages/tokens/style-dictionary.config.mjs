@@ -74,6 +74,7 @@ const hooks = {
   buttonVariantBgHover: '--brikka-button-variant-bg-hover',
   buttonVariantFg: '--brikka-button-variant-fg',
   buttonVariantBorder: '--brikka-button-variant-border',
+  buttonDisabledOpacity: '--brikka-button-disabled-opacity',
 };
 
 const camel = (path) =>
@@ -255,7 +256,7 @@ export default {
       ],
       { transforms: ['name/strip-role'], preprocessors: ['theme/dark'] },
     ),
-    control: platform([cssFile('control.css', only('button'))]),
+    control: platform([cssFile('control.css', only('control'))]),
     typography: platform([
       cssFile(
         'typography.css',
@@ -274,7 +275,6 @@ export default {
         only(
           'border-width',
           'border-width-thick',
-          'control-height',
           'duration',
           'easing',
           'elevation',

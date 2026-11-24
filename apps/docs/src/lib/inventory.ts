@@ -225,11 +225,11 @@ const RULES: Rule[] = [
     test: /^--brikka-scale-/,
   },
   {
-    id: 'control-height',
+    id: 'control',
     level: 'primitive',
-    title: 'Control height',
-    caption: 'Computed from the density and held at the target floor.',
-    test: /^--brikka-control-height$/,
+    title: 'Control',
+    caption: 'What every control shares: its height, and the factor it is dimmed at.',
+    test: /^--brikka-control-/,
   },
   {
     id: 'surfaces',
@@ -266,13 +266,6 @@ const RULES: Rule[] = [
     caption: 'The ring a keyboard user follows, and the halo behind it.',
     test: /^--brikka-focus-(ring|halo)$/,
   },
-  {
-    id: 'component',
-    level: 'component',
-    title: 'Component',
-    caption: 'A component’s own copy of a primitive, so the graph never names the component.',
-    test: /^--brikka-button-/,
-  },
 ];
 
 const LEVELS: { id: Level; title: string; caption: string }[] = [
@@ -286,11 +279,6 @@ const LEVELS: { id: Level; title: string; caption: string }[] = [
     title: 'Semantic',
     caption:
       'A decision a page composes with. Named for what it does, and it resolves in both themes.',
-  },
-  {
-    id: 'component',
-    title: 'Component',
-    caption: 'A component’s own seam. Not a role: it exists so one element can be adjusted alone.',
   },
 ];
 

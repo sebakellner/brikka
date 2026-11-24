@@ -105,10 +105,12 @@ hops a button resolves through are each owned by the layer that sets them.
 The rest is unchanged. The control tier is gone: the sixteen tokens removed were
 `button.{primary,secondary,ghost}.{bg,bg-hover,fg,border}` and
 `input.{bg,color,label-color,border-color}`, their values now live in `text-default`,
-`border-default`, `bg-surface*` and `bg-accent*`, and `--brikka-button-disabled-opacity`
-is the only component token left because opacity is not a color. It holds no value of its
-own: it defaults to the base primitive `{opacity.disabled}`, so a disabled control has one
-default and one place to override it.
+`border-default`, `bg-surface*` and `bg-accent*`, and what is left under `control` is what
+every control shares rather than what one component paints: `control.height`, and
+`control.disabled-opacity` because opacity is not a color. Neither holds a value of its own —
+the factor defaults to the base primitive `{opacity.disabled}` — so an unavailable control has one
+default and one place to override it, and a component that wants its own seam declares a hook over
+that name.
 
 **Do**
 
@@ -335,7 +337,7 @@ and reads the computed value, in both directions. Density `0.3` computes the nam
 scale `0.5` computes each step times the named multiplier, while density `1` still computes `40px`
 and type scale `1.125` still computes `13.5px`, which is what proves the floor is a floor and not a
 pin. Because a named floor and a literal carrying the same number compute the same value, the two
-assertions about what a floor _is_ read the declarations in `base.css` and `typography.css` instead
+assertions about what a floor _is_ read the declarations in `control.css` and `typography.css` instead
 of a computed length, and they read all six font sizes one by one: `xs` alone would let the other
 five regress to a baked `0.875` unnoticed.
 

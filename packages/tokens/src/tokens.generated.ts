@@ -113,7 +113,6 @@ export const tokens = {
   spaceBase: '--brikka-space-base',
   borderWidth: '--brikka-border-width',
   borderWidthThick: '--brikka-border-width-thick',
-  controlHeight: '--brikka-control-height',
   focusRingWidth: '--brikka-focus-ring-width',
   focusRingOffset: '--brikka-focus-ring-offset',
   opacityDisabled: '--brikka-opacity-disabled',
@@ -140,7 +139,8 @@ export const tokens = {
   typographyBodyMd: '--brikka-typography-body-md',
   typographyBodySm: '--brikka-typography-body-sm',
   typographyLabelMd: '--brikka-typography-label-md',
-  buttonDisabledOpacity: '--brikka-button-disabled-opacity',
+  controlHeight: '--brikka-control-height',
+  controlDisabledOpacity: '--brikka-control-disabled-opacity',
   roleBgInverse: '--brikka-bg-inverse',
   roleBgSurface: '--brikka-bg-surface',
   roleBgSurfaceMuted: '--brikka-bg-surface-muted',
@@ -232,6 +232,7 @@ export const hooks = {
   buttonVariantBgHover: '--brikka-button-variant-bg-hover',
   buttonVariantFg: '--brikka-button-variant-fg',
   buttonVariantBorder: '--brikka-button-variant-border',
+  buttonDisabledOpacity: '--brikka-button-disabled-opacity',
 } as const;
 
 export type HookName = (typeof hooks)[keyof typeof hooks];

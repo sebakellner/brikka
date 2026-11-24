@@ -77,10 +77,10 @@ describe('the floors under the two configuration axes', () => {
    * the token from the literal. S6 says each floor is read as a token and never written inside the
    * expression, and that is only observable where the declaration is. */
   it('reads each floor as a token, never as a literal inside the expression', async () => {
-    const base = await (await fetch('/packages/tokens/src/tokens/base.css')).text();
+    const control = await (await fetch('/packages/tokens/src/tokens/control.css')).text();
     const typography = await (await fetch('/packages/tokens/src/tokens/typography.css')).text();
 
-    expect(base).to.contain(
+    expect(control).to.contain(
       '--brikka-control-height: max(calc(40px * var(--brikka-scale-density)), var(--brikka-size-target-min));',
     );
     expect(typography).to.contain(
