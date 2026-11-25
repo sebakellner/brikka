@@ -3,6 +3,9 @@
  * whole app. Nothing here copies CSS out of the package, and no path reaches into
  * `packages/` — `@brikka-ui/tokens/theme.css` is the entry a consumer installs. */
 import '@brikka-ui/tokens/theme.css';
+/* The opt-in entry, imported so the app can exercise the third path: a document that has chosen
+ * no theme follows the operating system. It is not part of `theme.css` on purpose. */
+import '@brikka-ui/tokens/dark-by-preference.css';
 ---
 
 <!doctype html>
@@ -17,6 +20,7 @@ import '@brikka-ui/tokens/theme.css';
     <div class="theme-switch" role="group" aria-label="Theme" data-theme-switch>
       <button type="button" data-set-theme="light" aria-pressed="false">Light</button>
       <button type="button" data-set-theme="dark" aria-pressed="true">Dark</button>
+      <button type="button" data-set-theme="auto" aria-pressed="false">Auto</button>
     </div>
     <main>
       <slot />
@@ -32,7 +36,10 @@ import '@brikka-ui/tokens/theme.css';
   const buttons = [...document.querySelectorAll<HTMLButtonElement>('[data-set-theme]')];
 
   const setTheme = (theme: string): void => {
-    root.dataset.theme = theme;
+    /* `auto` is the absence of a choice: the attribute goes away and the opt-in stylesheet decides
+       by `prefers-color-scheme`, which is the only way to exercise that path. */
+    if (theme === 'auto') delete root.dataset.theme;
+    else root.dataset.theme = theme;
     for (const button of buttons) {
       button.setAttribute('aria-pressed', String(button.dataset.setTheme === theme));
     }

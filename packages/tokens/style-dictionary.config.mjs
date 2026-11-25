@@ -188,10 +188,12 @@ export default {
       transforms: ['name/strip-role'],
       preprocessors: ['theme/dark'],
     }),
-    colorDarkAuto: platform(
+    /* Not part of `tokens.css`: following the operating system is a page's decision, not the
+     * graph's. A host that wants it imports `@brikka-ui/tokens/dark-by-preference.css`. */
+    colorDarkByPreference: platform(
       [
         {
-          destination: 'color.dark.media.css',
+          destination: 'dark-by-preference.css',
           format: 'css/variables-in-media',
           filter: only('role'),
           options: {

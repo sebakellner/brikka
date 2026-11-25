@@ -23,6 +23,7 @@
   "exports": {
     "./theme.css": "./src/theme.css",
     "./tokens.css": "./src/tokens.css",
+    "./dark-by-preference.css": "./src/dark-by-preference.css",
     ".": {
       "types": "./dist/tokens.generated.d.ts",
       "default": "./dist/tokens.generated.js"

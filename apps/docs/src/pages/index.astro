@@ -224,7 +224,10 @@ const itemsOf = (group: { id: string; names: string[] }): Item[] =>
       const expected = summary.dataset.expected ?? '?';
       const missing =
         unresolved.length === 0 ? 'every name resolves' : `no value: ${unresolved.join(', ')}`;
-      const theme = document.documentElement.dataset.theme ?? 'dark';
+      const chosen = document.documentElement.dataset.theme;
+      const theme =
+        chosen ??
+        (matchMedia('(prefers-color-scheme: dark)').matches ? 'auto (dark)' : 'auto (light)');
       summary.textContent = `${seen.size} of ${expected} names rendered in ${theme} · ${missing}`;
       if (unresolved.length > 0) summary.dataset.empty = 'true';
       else delete summary.dataset.empty;

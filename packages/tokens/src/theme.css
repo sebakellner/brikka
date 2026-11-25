@@ -9,7 +9,8 @@
    everything around them does not.
 
    Every selector is zero-specificity so a host that wants to opt out can, with an
-   ordinary class. */
+   ordinary class. A page with no `data-theme` is light; following the operating system
+   is a separate import, `@brikka-ui/tokens/dark-by-preference.css`. */
 :where(:root),
 :where([data-theme='light']) {
   color-scheme: light;
@@ -17,12 +18,6 @@
 
 :where([data-theme='dark']) {
   color-scheme: dark;
-}
-
-@media (prefers-color-scheme: dark) {
-  :where(:root:not([data-theme])) {
-    color-scheme: dark;
-  }
 }
 
 /* Motion is one composite token, so one rule retimes the whole kit: a host that asks

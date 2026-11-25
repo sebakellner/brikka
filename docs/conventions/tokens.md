@@ -263,9 +263,11 @@ hurry is the symptom of having asked the wrong one.
 ## R10. The palette is declared once, at the root
 
 **Rule.** Every palette step is emitted in one block, under `:where(:root)`. The light block,
-`:where(:root), :where([data-theme="light"])`, carries the semantic roles; the two dark blocks,
-`:where([data-theme="dark"])` and `:where(:root:not([data-theme]))`, carry the roles and no palette
-step. All 64 steps live under the root selector, ahead of the roles that read them.
+`:where(:root), :where([data-theme="light"])`, carries the semantic roles; the explicit dark block,
+`:where([data-theme="dark"])`, carries the roles and no palette step. A second dark block is
+generated for a document that has chosen nothing, and it is **not** imported by `tokens.css`: a page
+that wants to follow the operating system imports `@brikka-ui/tokens/dark-by-preference.css`, because
+following the system is the page's decision and not the graph's. All 64 steps live under the root selector, ahead of the roles that read them.
 
 **Why.** The ramp is theme-invariant: a theme re-declares the roles, and has no opinion about the
 palette. Declaring the ramp under the light selector as well made it a per-theme block, and a
@@ -278,8 +280,8 @@ theme, and a host's palette override is a document-level fact in both.
 
 **Enforced by.** Review, against the generated output: `packages/tokens/src/tokens/color.css` opens
 with `:where(:root)` and carries all 64 palette steps before the light role block, while
-`packages/tokens/src/tokens/color.dark.css` and `color.dark.media.css` declare no palette step at
-all. The suite holds the behaviour: `packages/tokens/test/palette.test.ts` overrides a palette step
+`packages/tokens/src/tokens/color.dark.css` declares no palette step at all, and neither does
+`dark-by-preference.css`. The suite holds the behaviour: `packages/tokens/test/palette.test.ts` overrides a palette step
 at the root and reads, inside a `data-theme="light"` subtree, the role that composes it.
 
 ## R11. The space base is computed into four families

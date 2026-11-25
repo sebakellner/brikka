@@ -223,6 +223,11 @@ A layer is never imported on its own. `tokens.css` composes them, and `typograph
 a scale that `base.css` declares, so a page that links one file in isolation gets an unresolved
 `var()`.
 
+A document that has chosen no theme is light. Following the operating system is one more import —
+`@brikka-ui/tokens/dark-by-preference.css` — because a page that flips with the machine of whoever
+is reading is a decision the page makes, not one the graph makes for it. An explicit `data-theme`
+wins over the preference either way.
+
 The package exports two things and nothing else: `tokens`, the map from a readable key to the custom
 property that carries it, and `breakpoints`, five numbers, because `@media` cannot read a custom
 property. A hook is not in either of them — `--brikka-button-bg` is the button's name, so the
