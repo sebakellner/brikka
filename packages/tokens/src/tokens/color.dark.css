@@ -1,5 +1,6 @@
 :where([data-theme="dark"]) {
   --brikka-bg-scrim: rgb(28 25 23 / 0.64);
+  --brikka-elevation-color: rgb(0 0 0 / 0.55);
   --brikka-bg-inverse: var(--brikka-palette-neutral-100);
   --brikka-bg-surface: var(--brikka-palette-neutral-900);
   --brikka-bg-surface-muted: var(--brikka-palette-neutral-800);

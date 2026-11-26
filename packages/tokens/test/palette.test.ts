@@ -64,3 +64,49 @@ describe('the palette at the root', () => {
     expect(getComputedStyle(probe).color).to.equal(OVERRIDE);
   });
 });
+
+/* A ramp is a reference, not a usage list, so the palette is where a value can go missing without
+ * any consumer noticing: nothing reads `teal-800`, so nothing fails when it is deleted or when a
+ * hex is typed as `#0d948` and the browser drops the declaration. This reads the artifact the page
+ * consumes, not the source, and holds the two things that make a ramp a ramp: every step, and a
+ * colour the browser can parse. */
+describe('the palette is complete', () => {
+  const STEPS = ['100', '200', '300', '400', '500', '600', '700', '800', '900'];
+
+  const declarations = async (): Promise<Map<string, string>> => {
+    const css = await (await fetch('/packages/tokens/src/tokens/color.css')).text();
+    const entries = new Map<string, string>();
+    for (const [, name, value] of css.matchAll(/--brikka-palette-([a-z0-9-]+):\s*([^;]+);/g)) {
+      entries.set(name, value.trim());
+    }
+    return entries;
+  };
+
+  it('declares the two ends of the scale beside the ramps', async () => {
+    const palette = await declarations();
+    expect(palette.get('white')).to.equal('#ffffff');
+    expect(palette.get('black')).to.equal('#000000');
+  });
+
+  it('gives every ramp the same nine steps', async () => {
+    const palette = await declarations();
+    const ramps = new Map<string, string[]>();
+    for (const name of palette.keys()) {
+      if (!/^[a-z]+-\d+$/.test(name)) continue;
+      const [ramp, step] = name.split('-');
+      ramps.set(ramp, [...(ramps.get(ramp) ?? []), step]);
+    }
+
+    expect(ramps.size, 'thirteen ramps').to.equal(13);
+    for (const [ramp, steps] of ramps) {
+      expect(steps.sort(), ramp).to.deep.equal(STEPS);
+    }
+  });
+
+  it('declares every step as a colour a browser can parse', async () => {
+    const palette = await declarations();
+    for (const [name, value] of palette) {
+      expect(value, name).to.match(/^#[0-9a-f]{6}$/);
+    }
+  });
+});

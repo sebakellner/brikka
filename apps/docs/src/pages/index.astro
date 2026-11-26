@@ -224,7 +224,10 @@ const itemsOf = (group: { id: string; names: string[] }): Item[] =>
       const expected = summary.dataset.expected ?? '?';
       const missing =
         unresolved.length === 0 ? 'every name resolves' : `no value: ${unresolved.join(', ')}`;
-      const theme = document.documentElement.dataset.theme ?? 'dark';
+      const chosen = document.documentElement.dataset.theme;
+      const theme =
+        chosen ??
+        (matchMedia('(prefers-color-scheme: dark)').matches ? 'auto (dark)' : 'auto (light)');
       summary.textContent = `${seen.size} of ${expected} names rendered in ${theme} · ${missing}`;
       if (unresolved.length > 0) summary.dataset.empty = 'true';
       else delete summary.dataset.empty;
@@ -405,6 +408,29 @@ const itemsOf = (group: { id: string; names: string[] }): Item[] =>
     align-items: center;
     min-width: 0;
     overflow: hidden;
+  }
+
+  /* A shadow is drawn outside the box it belongs to, and `overflow: hidden` on a sample the
+     exact size of that box cut it away entirely — the row showed a rectangle with no shadow
+     and looked like a token that does not resolve. The box also needs a surface: a transparent
+     element casts a shadow onto itself and reads as an outline, not as something lifted. */
+  .token[data-kind='shadow'] .sample {
+    overflow: visible;
+    padding: var(--brikka-space-4);
+    /* The sample's own field is the page surface, not the row's, so the shadow is the only
+       difference between the box and what it sits on. Anything else and the box separates by
+       colour and hides whether the shadow does anything. */
+    background: var(--brikka-bg-surface);
+  }
+
+  /* A shadow is judged on something the size of a card, not on a 40px square: with a 3px blur
+     the whole shadow lives in a band thinner than the box's own border. Two classes on the
+     selector because `.box` sets the size and comes later in this sheet. */
+  .token[data-kind='shadow'] .sample .box {
+    width: var(--brikka-container-sm);
+    max-width: 100%;
+    height: var(--brikka-space-16);
+    background: var(--brikka-bg-surface);
   }
 
   .meta {

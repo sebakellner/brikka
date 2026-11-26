@@ -213,10 +213,12 @@ const RULES: Rule[] = [
     test: /^--brikka-focus-ring-(width|offset)$/,
   },
   {
-    id: 'depth-values',
-    level: 'primitive',
-    title: 'Depth values',
-    caption: 'The tint a shadow is painted with, and nothing else.',
+    id: 'depth-tint',
+    level: 'decision',
+    title: 'Depth tint',
+    caption:
+      'The tint both shadows are painted with — denser in the dark theme, because the same alpha over a near-black page is the same colour twice.',
+    kind: 'role',
     test: /^--brikka-elevation-color$/,
   },
   {
@@ -391,6 +393,7 @@ export function rampsOf(names: readonly string[]): Ramp[] {
  * to the token it came from. */
 const PALETTE_GROUPS = new Set([
   'colour-ramps',
+  'depth-tint',
   'surfaces',
   'inks',
   'edges',

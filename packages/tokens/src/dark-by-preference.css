@@ -1,0 +1,11 @@
+/* Opt-in: a document that has not chosen a theme follows the operating system. Not part of
+   `tokens.css`, because that would make the choice for every host; a page that wants it imports
+   this file and nothing else changes. An explicit `data-theme` always wins, because every rule
+   here is scoped to `:not([data-theme])`. */
+@import './tokens/dark-by-preference.css';
+
+@media (prefers-color-scheme: dark) {
+  :where(:root:not([data-theme])) {
+    color-scheme: dark;
+  }
+}

@@ -146,6 +146,12 @@
     "focus-ring": {
       "$value": "{palette.sky-400}",
       "$description": "The opaque ring a focus indicator is drawn with."
+    },
+    "elevation": {
+      "color": {
+        "$value": "rgb(0 0 0 / 0.55)",
+        "$description": "The tint a shadow is painted with. It reads as depth in both themes because it is denser where the surface is dark: the same alpha over a near-black page is the same colour twice."
+      }
     }
   }
 }
